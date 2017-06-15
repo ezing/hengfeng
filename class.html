@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>课前微课资料</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h4 class="weike-title"></h4>
+        <div class="row">
+            <div class="col-lg-6 col-md-9 col-sm-12">
+
+                    <div id='loading'>Loading the player ...</div>
+                    <div style="overflow:hidden; margin:20px 0px;">
+                        <div class="btn btn-info startPlayBtn">
+                            <i class="glyphicon glyphicon-play"></i>播放
+                            <i class="glyphicon glyphicon-pause"></i>暂停
+                        </div>
+
+                        <div class="btn btn-info replayBtn">
+                            <i class="glyphicon glyphicon-repeat"></i>重播
+                        </div>
+
+                        <a href="#" class="downloadUrl">
+                            <div class="btn btn-warning pull-right">
+                                <i class="glyphicon glyphicon-download-alt"></i>下载视频
+                            </div>
+                        </a>
+                    </div>
+
+
+            </div>
+
+            <div class="col-lg-6 col-md-3 col-sm-12">
+                <div class="exercisePanel">
+                    <div class="list-group">
+                        <a href="EXAM2_keqianlianxi_Show.aspx?LID=115&tpID=6485&HideTop=true" class="yulanzuoye list-group-item">
+                            <div class="btn hvr-wobble-top btn-success btn-xs">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 练习
+                            </div> 调查与收集数据练习1
+                            <span class="label label-danger">未完成</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="notePanel">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">我的笔记</div>
+                        <div class="panel-body">
+                            <div class="notesPanel"></div>
+                            <div class="well">
+                                <div clas="inputPanel"></div>
+                                <textarea name="addNote" rows="2" cols="20" class="note-content" style="height:100px;width:100%;"></textarea>
+
+                                <div align="center" style="margin-top: 10px;">
+                                    <button type="button" class="btn hvr-wobble-top btn-default voiceInputBtn" style="display: none;">
+                                  语音输入</button>
+                                    <button type="button" class="btn hvr-wobble-top btn-primary addNoteBtn" data-loading-text="加载中...">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/jwplayer.js"></script>
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/core.js"></script>
+    <!-- <script src="./js/swfobject.js"></script> -->
+    <script src="./js/main.js"></script>
+
+</body>
+
+</html>

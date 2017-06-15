@@ -1,0 +1,848 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	课前微课资料
+</title><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./js/jwplayer.js" type="text/javascript"></script>
+    <script src="./js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        function addBiji() {
+            var btn = $("#btn_submit");
+            btn.button('loading');
+            document.getElementById("bt_addBiji").click();
+            setTimeout(function () { btn.button('reset'); }, 1000000);
+        }
+        function delBiji(bijiID) {
+            $("#hidBijiID").val(bijiID);
+            document.getElementById("bt_delBiji").click();
+        }
+        function delConfig(bijiID) {
+
+            $("#delZuoYeConfig_" + bijiID).fadeOut(500);
+            $("#delZuoYe_" + bijiID).fadeIn(1000);
+            setTimeout("delConfigReturn(" + bijiID + ")", 5000);
+        }
+        function delConfigReturn(bijiID) {
+            $("#delZuoYeConfig_" + bijiID).fadeIn(300);
+            $("#delZuoYe_" + bijiID).fadeOut(300);
+        }
+
+        function iFrameHeight() {
+            var ifm = document.getElementById("webVideoFrame");
+            var subWeb = document.frames ? document.frames["webVideoFrame"].document : ifm.contentDocument;
+            if (ifm != null && subWeb != null) {
+                ifm.height = subWeb.body.scrollHeight;
+            }
+        }
+        function HideXiaFaBtn(type, id) {
+            $("#btxiafa_" + id).hide();
+        }
+        function xiafa(type, id, classID) {
+
+            $("#XiaFaResLink").attr("href", "../STJA/STJA_ReleaseClass.aspx?type=" + type + "&id=" + id + "&classID=" + classID);
+            $("#XiaFaResLink").click();
+
+        }
+
+        var time = 0;
+        setInterval("initSutdyTime()", 5000);
+        function initSutdyTime() {
+            //            time += 1;
+            //            var txt = formatSeconds(time);
+            //            $("#span_time").html(" 学习 " + txt);
+            addStudyTime();
+        }
+        //记录视频学习时间
+        function addStudyTime() {
+
+            var curPlayTime = 0;
+            var endPlayTime = 0;
+
+            try {
+                curPlayTime = jwplayer().getPosition();
+                endPlayTime = jwplayer().getDuration();
+            }
+            catch (err) {
+            }
+
+
+            $.ajax({
+                url: "../JYFXPJ/Ajax/WKTajax.aspx?m=" + Math.random(),
+                type: "POST",
+                data: {
+                    type: "addStudyTime",
+                    objID: $("#weikeID").val(),
+                    objName: "",
+                    curPlayTime: curPlayTime,
+                    endPlayTime: endPlayTime,
+                    table: "prodoc_ja_weike",
+                    time: 5
+                },
+                beforeSend: function () {
+                    //                    dlg.Msg.Lod("数据加载中,请稍后...", "popLoading1");
+                },
+                success: function (result) {
+                    //                    dlg.clsLod("popLoading1");
+
+                },
+                error: function () {
+                    //                    dlg.clsLod("popLoading1");
+                    //                    dlg.Msg.Err("加载数据出错,请稍后重试!!");
+                }
+            });
+
+        }
+
+
+        function StartWinformExam(ExamType, ExamID, ExamName) {
+            //            alert("ExamType=" + ExamType);
+            //            alert("ExamID=" + ExamID);
+            //            alert("ExamName=" + ExamName);
+
+            Notify('启动客户端答题，类型：' + ExamType + "_" + ExamID, 'top-right', '1000', 'success', 'fa-check', true);
+            Notify('启动客户端答题，名称：' + ExamName, 'top-right', '1000', 'success', 'fa-check', true);
+
+            var strWEResult = window.external.InterfaceForJS(ExamType, ExamID, ExamName);
+
+            Notify('启动客户端答题成功');
+        }
+
+        function PageReloadBtnFun(strUrl) {
+            setTimeout("PageReloadBtnFunTimeOut()", 5000);
+
+            //            jwplayer('container2').setup(
+            //            {
+            //                screencolor: '0x000000',
+            //                autostart: true,
+            //                flashplayer: '../js/jwplayer-5.9/player.swf',
+            //                file: strUrl,
+            //                height: 380,
+            //                width: 764,
+            //                events: {
+            //                    onComplete: function () { PageReloadBtnFun() }
+            //                }
+            //            });
+        }
+
+        function PageReloadBtnFunTimeOut() {
+            $("#PageReloadBtn").click();
+        }
+
+        function Html5VideoPlay() {
+            document.getElementById('myVideo').play();
+        }
+        function Html5VideoPause() {
+            document.getElementById('myVideo').pause();
+        }
+
+    </script>
+</head>
+<body>
+    <form name="form1" method="post" action="EXAM2_YuXi_Play.aspx?HideTop=true&amp;VID=913&amp;HideReturn=true" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNjM2NDE2NzA3D2QWAgIDD2QWBAICD2QWBAIDDxYCHglpbm5lcmh0bWwFZTxsaW5rIGhyZWY9Ii4uL2pzL2JleW9uZC9ib290Y3NzL2Jvb3RzdHJhcF8xNHB4L2Nzcy9ib290c3RyYXAuY3NzP3ZlcnNpb249MTcwNTIzIiByZWw9InN0eWxlc2hlZXQiIC8+ZAIED2QWAgIBD2QWFgIBDxYCHgdWaXNpYmxlaBYCAgEPDxYCHghJbWFnZVVybAUiLi4vLi4vaW1hZ2VzL+aZuuaFp+ivvuWggl9sb2dvLnBuZ2RkAgUPFgIeBGhyZWZkFgICAQ8PFgIeBFRleHQFHTJhaXgxMO+8iOS6jOW5tOe6pyhhaXgp54+t77yJZGQCBw8WAh8BaGQCCQ8WAh8BaGQCCw8WAh8BaGQCDQ8WAh8BaGQCDw8WAh8BaGQCEQ8WAh8BaGQCEw9kFgICAQ8WAh8ABbUBICA8bGkgb25jbGljaz0iem9vbVNldCgxMDApIiAgIGNsYXNzPSJjaG9vc2UiICA+MTAwJTwvbGk+ICAgPGxpIG9uY2xpY2s9Inpvb21TZXQoMTIwKSIgID4xMjAlPC9saT4gICA8bGkgb25jbGljaz0iem9vbVNldCgxNTApIiAgPjE1MCU8L2xpPiAgIDxsaSBvbmNsaWNrPSJ6b29tU2V0KDIwMCkiICA+MjAwJTwvbGk+IGQCFQ8WAh8BaGQCFw8PFgIfBAVmJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ZGQCBw8WAh4Fc3R5bGUFJXdpZHRoOjEwMCU7ZGlzcGxheTpub25lO2hlaWdodDo0ODBweDtkZPKfPQF+TayEbAx/CA5XcFMv10VbBmjS/Rx5YGKKfcCZ" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=Ac-giOdO8ETV1q4LOtuIjXWcUzbA_Q8lCIQj3e6BYk9f6Ikin-m7h0lFDS4S-Leh46zXptEtnVFixNAEfi_AEIIbw57cuNkWjAzDzSLxhTs1&amp;t=635117217316159565" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=YcLiAMSI1VAgsm02cMA9Bx68rpZngult9apVMRxFVvlc1UjK8Dvn5erl2l3p0UtiLlCLEdRF_huASJM_VodOIHoxBBxgHO6FsL5wpAdEJnkbHiuGAz_8unTaC0UnL_gqSOo8JCogcCPYAdgGrgTsf_QGfBUEBT3YmQa6mDqRWz6onpyCkuNICShk63UWm6WP0&amp;t=26dfbc01" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax 客户端框架未能加载。');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=bAI8x959dBqXXJ5T1ECXXNQUwOYSI34yN0i5axwiq0BpO9yr2RBmJ8ocEtjPSyFDnZjl4QGUJutBhcaPnVyHTEbJi2M2IhL5NkarSPfrW2Yw2gB4Y049SJVkDc6oW9vKycuT-2cjWqH4QH7jN9LPsjnYqI3OyqH95JkDuwi8nNtR0GYz9LC1MDV_NAICwDVy0&amp;t=26dfbc01" type="text/javascript"></script>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager2', 'form1', ['tUpdatePanel1',''], [], [], 90, '');
+//]]>
+</script>
+
+    <div>
+        <div id="Html5ScriptPanel">
+
+
+</div>
+        <div id="top_linkPanel">
+
+
+</div>
+
+
+<link rel="stylesheet" type="text/css" href="../css/hover-min.css?version=170523">
+<link rel="stylesheet" type="text/css" href="../js/fileinput/css/default.css?version=170523">
+<link href="../js/fileinput/css/fileinput.css?version=170523" media="all" rel="stylesheet"
+    type="text/css" />
+<link href="../js/beyond/css/bootstrap.min.css?version=170523" rel="stylesheet" />
+<link href="../js/beyond/css/font-awesome.min.css?version=170523" rel="stylesheet" />
+
+<link href="../js/beyond/css/beyond.css?version=170523" rel="stylesheet" />
+<script src="../js/beyond/js/skins.min.js?version=170523"></script>
+<link href="../js/beyond/css/weather-icons.min.css?version=170523" rel="stylesheet" />
+<link href="../js/beyond/css/demo.css?version=170523" rel="stylesheet" />
+<link href="../js/beyond/css/typicons.min.css?version=170523" rel="stylesheet" />
+<link href="../js/beyond/css/animate.min.css?version=170523" rel="stylesheet" />
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script src="../js/beyond/js/bootstrap.min.js?version=170523"></script>
+<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js?version=170523"></script>
+<script src="../js/beyond/js/beyond.min.js?version=170523"></script>
+<script src="../js/beyond/js/validation/bootstrapValidator.js?version=170523"></script>
+<script src="../js/beyond/js/editors/summernote/summernote.js?version=170523"></script>
+<script src="../js/beyond/js/bootbox/bootbox.js?version=170523"></script>
+<script src="../js/beyond/js/toastr/toastr.js?version=170523"></script>
+<script src="../js/beyond/js/fuelux/spinbox/fuelux.spinbox.min.js?version=170523"></script>
+<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js?version=170523"></script>
+<script src="../js/fileinput/js/fileinput.js?version=170523" type="text/javascript"></script>
+<script src="../js/fileinput/js/fileinput_locale_zh.js?version=170523" type="text/javascript"></script>
+<script type="text/javascript" src="./js/swfobject.js"></script>
+
+<script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js?version=170523"></script>
+<link rel="stylesheet" type="text/css" href="../EXAM/css/Exam.css?version=170523">
+
+<!--Bootstrap Date Range Picker-->
+<script src="../js/beyond/js/datetime/moment.js?version=170523"></script>
+<script src="../js/beyond/js/datetime/daterangepicker.js?version=170523"></script>
+
+
+<script src="../js/FlipClock/compiled/flipclock.js?version=170523"></script>
+<link rel="stylesheet" type="text/css" href="../js/FlipClock/compiled/flipclock.css?version=170523" />
+
+<script type="text/javascript" src="../js/fancyBox_v2_1_5/lib/jquery.mousewheel-3.0.6.pack.js?version=170523"></script>
+<script type="text/javascript" src="../js/fancyBox_v2_1_5/source/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="../js/fancyBox_v2_1_5/source/jquery.fancybox.css?v=2.1.6"
+    media="screen" />
+<link href="../css/animate.css?version=170523" type="text/css" rel="stylesheet" />
+<div id="top_SkinPanel">
+
+</div>
+<div id="top_HengFengPanel">
+
+</div>
+
+<style type="text/css">
+    .myIconBar
+    {
+        display: block;
+        width: 4px;
+        height: 4px;
+        border-radius: 1px;
+        background-color: #888;
+        float: left;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    img
+    {
+        max-width: 100%;
+    }
+
+    .navLink
+    {
+        text-shadow: 0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff,0 0 2px #ffffff;
+    }
+    .navLink:hover
+    {
+        color: Black;
+    }
+</style>
+<div id="top_topClass"><link href="../js/beyond/bootcss/bootstrap_14px/css/bootstrap.css?version=170523" rel="stylesheet" /></div>
+<link href="../js/beyond/css/font-awesome.min.css?version=170523" rel="stylesheet" />
+<div id="top_WisdomClass_Type" class="navbar navbar-default navbar-innerBackground">
+    <div id="top_navbarinnerDiv" class="">
+        <div class="navbar-container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span> <span class="myIconBar"></span><span
+                        class="myIconBar" style="margin-left: 4px;"></span><span class="myIconBar" style="margin-left: 4px;">
+                        </span>
+                </button>
+
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div id="top_DaoHang" style="background-color: White;">
+
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown"><a id="top_UserNameLink" class="dropdown-toggle navLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span id="top_LabelName">2aix10（二年级(aix)班）</span>
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+
+
+
+
+
+                            <li role="separator" class="divider"></li>
+                            <li id="top_Li_suofang">
+                                <h5>
+                                    <span style="padding: 0 10px; line-height: 30px;">页面缩放</span></h5>
+                                <ul id="top_zoomSetUl" class="zoomSetUl">  <li onclick="zoomSet(100)"   class="choose"  >100%</li>   <li onclick="zoomSet(120)"  >120%</li>   <li onclick="zoomSet(150)"  >150%</li>   <li onclick="zoomSet(200)"  >200%</li> </ul>
+
+                                <input name="top$hidZoom" type="hidden" id="top_hidZoom" class="hidZoomCss" />
+                            </li>
+                            <li role="separator" class="divider"></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <span id="top_LabelMargin">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </div>
+</div>
+<div style="position: absolute; z-index: 9000; padding: 0px 20px;">
+    <div id="BSAlertDiv_Success" class="alert alert-success" style="box-shadow: 2px 2px 8px #000000;
+        display: none;">
+
+        <strong id="BSAlertMsg_Success">成功</strong>
+    </div>
+    <div id="BSAlertDiv_Info" class="alert alert-info" style="box-shadow: 2px 2px 8px #000000;
+        display: none;">
+        <strong id="BSAlertMsg_Info">成功</strong>
+    </div>
+    <div id="BSAlertDiv_Warning" class="alert alert-warning" style="box-shadow: 2px 2px 8px #000000;
+        display: none;">
+        <strong id="BSAlertMsg_Warning">成功</strong>
+    </div>
+    <div id="BSAlertDiv_Danger" class="alert alert-danger" style="box-shadow: 2px 2px 8px #000000;
+        display: none;">
+        <strong id="BSAlertMsg_Danger">成功</strong>
+    </div>
+</div>
+<div style="display: none;">
+    <input type="submit" name="top$SetZoomBtn" value="" id="top_SetZoomBtn" class="SetZoomBtnCss" />
+</div>
+<script type="text/javascript">
+
+    //设置cookie
+    function setCookie(name, value, seconds) {
+
+//        alert("dd" + value);
+
+        seconds = seconds || 0; //seconds有值就直接赋值，没有为0，这个根php不一样。
+        var expires = "";
+        if (seconds != 0) { //设置cookie生存时间
+            var date = new Date();
+            date.setTime(date.getTime() + (seconds * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        document.cookie = name + "=" + escape(value) + expires + "; "; //转码并赋值
+    }
+
+    function zoomSet(j) {
+        //        setCookie("ZoomSet", j, 0);
+        //        location.reload(); //刷新当前页面.
+
+        //        alert($(".hidZoomCss").val());
+        $(".hidZoomCss").val(j);
+        //        alert($(".hidZoomCss").val());
+        $(".SetZoomBtnCss").click();
+
+    }
+</script>
+<style type="text/css">
+    img
+    {
+        max-width: 100%;
+    }
+    .zoomSetUl
+    {
+        padding: 0;
+        margin: 0;
+        border: 0px solid red;
+    }
+    .zoomSetUl li
+    {
+        padding: 0px 20px;
+        margin: 0;
+        line-height: 30px;
+    }
+    .zoomSetUl li:hover
+    {
+        background-color: #f4f4f4;
+    }
+    .zoomSetUl .choose
+    {
+        background-color: #f4f4f4;
+    }
+    .zoomSetUl li
+    {
+        list-style: none;
+    }
+</style>
+
+        <div class="container" style=" width:98%;">
+            <div id="panelReturn">
+	<div class="panel panel-default"><div class="panel-body"><div class="pull-left"><h5>18四个太阳_标清</h5></div></div></div>
+</div>
+            <div id="DxaZjContentTextPanel">
+
+
+</div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-9 col-sm-12">
+                    <div id="flvPanel" align="center">
+
+                     <div id='container2'>Loading the player ...</div>   <script type='text/javascript'>                     	jwplayer('container2').setup(                     	{                                                       screencolor:'0x000000',    		flashplayer: './js/player.swf',  		file: './video/636266400737679915_2091.flv',  		height: 380,                                  		width: '100%',                                    		events: { 		    onComplete: function () { PageReloadBtnFun('../res/JYFXPJ/Video/2017_4_1/636266400737679915_2091.flv')} 		} });                                                 </script>                                          <div style="overflow:hidden; margin:20px 0px;">
+ <div onclick="javascript:jwplayer().play();" class="btn btn-info"><i class="glyphicon glyphicon-play"></i>播放 <i class="glyphicon glyphicon-pause"></i>暂停</div>
+ <div onclick="PageReloadBtnFunTimeOut()" class="btn btn-info"><i class="glyphicon glyphicon-repeat"></i>重播</div>      <a href="../res/JYFXPJ/Video/2017_4_1/636266400737679915_2091.flv"><div class="btn btn-warning pull-right"><i class="glyphicon glyphicon-download-alt"></i>下载视频</div></a>  </div>
+</div>
+
+                    <div style="display: none;">
+                        <input type="submit" name="PageReloadBtn" value="" id="PageReloadBtn" />
+                    </div>
+                    <div id="sp_div" style="width:100%;display:none;height:480px;">
+                        <iframe id="webVideoFrame" height="470" width="100%" src="" frameborder="0">
+                        </iframe>
+                    </div>
+                    <div id="PlayTimeDiv" style="color: Gray; border: 0px solid red; display: none;">
+                    </div>
+                    <a id="charulianxiti" class="yulanzuoye" href="../DXA/DXA_WeiKeExam_Insert.aspx?weikeID=913&Dxa_ID=">
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-3 col-sm-12">
+
+                    <div id="HomeWeikeFilePanel">
+
+</div>
+                    <div id="LianXiPanel">
+
+    <div class="list-group">
+        <a   href="EXAM2_keqianlianxi_Show.aspx?LID=115&tpID=6485&HideTop=true" class="yulanzuoye list-group-item">
+            <div class="btn hvr-wobble-top btn-success btn-xs">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 练习
+            </div>                                                                           调查与收集数据练习1 <span class="label label-danger">未完成</span>
+        </a>
+    </div>
+</div>
+                    <div id="UpdatePanel1">
+
+                            <div id="bijiDiv" class="panel panel-default">
+                                <div class="panel-heading">
+                                    我的笔记</div>
+                                <div class="panel-body">
+                                    <div id="bijiPanel">
+
+           <div class="panel panel-default">
+               <div class="panel-body">
+                   <h6>                                                                                                                       2017/6/6 15:34:03
+                       </h6>
+                   <p style="float:left">                                                                                                                        sdf
+                   </p>                                                                                                                       <div class="pull-right" >
+                       <button id="delZuoYeConfig_41"   type="button" class="btn hvr-wobble-top btn-danger btn-xs" aria-label="Left Align" style="float:left" onclick="delConfig('41')">
+                           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                       </button>                                                                                                                                   <div id="delZuoYe_41" class="btn hvr-wobble-top btn-danger  btn-xs" style="display:none;float:left;" aria-label="Left Align" onclick="delBiji('41')">                       <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>确认删除                     </div>
+               </div>
+               </div>
+           </div>
+	</div>
+                                    <div class="well">
+                                        <div id="ShouXieInputPanel">
+
+
+	</div>
+                                        <textarea name="txbBiJi" rows="2" cols="20" id="txbBiJi" style="height:100px;width:100%;">
+</textarea>
+                                        <div align="center" style="margin-top: 10px;">
+                                            <button id="voiceBtn" type="button" class="btn hvr-wobble-top btn-default" style="display: none;"
+                                                onclick="voiceInput()">
+                                                语音输入</button>
+                                            <button type="button" id="btn_submit" class="btn hvr-wobble-top btn-primary" data-loading-text="加载中..."
+                                                autocomplete="off" onclick="addBiji()">
+                                                提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: none;">
+                                <input name="hidBijiID" type="hidden" id="hidBijiID" />
+                                <input type="submit" name="bt_addBiji" value="" id="bt_addBiji" />
+                                <input type="submit" name="bt_delBiji" value="" id="bt_delBiji" />
+                            </div>
+
+</div>
+                </div>
+            </div>
+
+
+            <div id="StudyXueQingPanel">
+
+</div>
+
+
+        </div>
+
+<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../js/beyond/js/beyond.min.js"></script>
+<div id="foot_WisdomClass_foot" style="background-color: #f8f8f8">
+    <div class="container-fluid" style="text-align: center; line-height: 40px; font-size: 12px;
+        margin-top: 100px;">
+        <span id="foot_footLabel"></span>
+    </div>
+</div>
+
+        <div id="wxConfigPanel">
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+ <script type="text/javascript">
+     wx.config({
+         debug: false,
+         appId: '',
+         timestamp: 0,
+         nonceStr: '',
+         signature: '92a979af117583e6c802ef9b554b6197bab58e12',
+         jsApiList: ['startRecord', 'stopRecord', 'playVoice', 'translateVoice']
+     });
+ function isWeiXin() {
+     var ua = window.navigator.userAgent.toLowerCase();
+     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+         return true;
+     } else {
+         return false;
+     }
+ }
+ $(function () {
+     InitvoiceBtn();
+ });
+ function InitvoiceBtn() {
+     if (isWeiXin()) {
+         $("#voiceBtn").show();
+     }
+ }
+ </script>
+</div>
+        <script type="text/javascript">
+            //        wx.ready(function () {
+
+            //            alert("ready ok");
+
+            //            $("#voiceBtn").show();
+            //        });
+
+            //        wx.checkJsApi({
+            //            jsApiList: ['startRecord'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            //            success: function (res) {
+            //                // 以键值对的形式返回，可用的api值true，不可用为false
+            //                // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}]
+
+            //                alert(res);
+            //            }
+            //        });
+
+            function getInsertButton() {
+
+                //                jwplayer().pause();
+                var curPlayTime = jwplayer().getPosition();
+                $("#charulianxiti").attr("href", " ../DXA/DXA_WeiKeExam_Insert.aspx?weikeID=" + $("#weikeID").val() + "&time=" + curPlayTime + "&Dxa_ID=" + $("#hidDxa_ID").val());
+                $("#charulianxiti").click();
+            }
+
+            var varlocalId = "";
+
+            function voiceInput() {
+
+                if ($("#voiceBtn").html() == "语音输入") {
+                    $("#voiceBtn").html("停止语音输入");
+                    wx.startRecord();
+                }
+                else {
+                    $("#voiceBtn").html("语音输入");
+
+
+                    wx.stopRecord({
+                        success: function (res) {
+                            varlocalId = res.localId;
+
+
+                            wx.translateVoice({
+                                localId: varlocalId, // 需要识别的音频的本地Id，由录音相关接口获得
+                                isShowProgressTips: 1, // 默认为1，显示进度提示
+                                success: function (res) {
+                                    // alert(res.translateResult); // 语音识别的结果
+                                    $("#txbBiJi").val(res.translateResult);
+                                }
+                            });
+
+                        }
+                    });
+                }
+
+            }
+
+            $(function () {
+
+
+
+
+                $(".yulanzuoye").fancybox({
+                    padding: 0,
+                    'width': 960,
+                    'height': 750,
+                    'autoScale': true,
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'type': 'iframe',
+                    scrolling: 'no',
+                    afterClose: function () {
+                        loadAllCourse();
+
+                        //                        jwplayer().play();
+                    }
+                });
+
+                $(".WeiKeExam").fancybox({
+                    padding: 0,
+                    'width': '90%',
+                    'height': 750,
+                    'autoScale': true,
+                    closeBtn: false,
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'type': 'iframe',
+                    scrolling: 'no',
+                    iframe: {
+                        scrolling: 'auto',
+                        preload: true
+                    },
+                    afterClose: function () {
+                        WeiKeExamClose();
+                    }
+                });
+
+                loadAllCourse();
+                setInterval("CheckExamStart()", 2000);
+            });
+
+
+            function CheckExamStart() {
+
+
+                if ($("#hidExamPopFlag").val() == "true") {
+                    return;
+                }
+
+                var varhidExamTime = $("#hidExamTime").val();
+                var arrhidExamTime = varhidExamTime.split(",");
+
+                var varhidLianXiID = $("#hidLianXiID").val();
+                var arrhidLianXiID = varhidLianXiID.split(",");
+
+                var varhidExamFlag = $("#hidExamFlag").val();
+                var arrhidExamFlag = varhidExamFlag.split(",");
+
+                var curPlayTime = 0;
+                var endPlayTime = 0;
+                try {
+                    curPlayTime = jwplayer().getPosition();
+                    endPlayTime = jwplayer().getDuration();
+                }
+                catch (err) {
+                }
+
+
+
+                if ($("#hidFirstStudentStudy").val() == "true") {
+                    var prePlayTime = $("#PlayTimeDiv").html();
+                    if (prePlayTime != "") {
+                        prePlayTime = parseFloat(prePlayTime);
+
+                        if ((curPlayTime - prePlayTime) > 10 || (curPlayTime - prePlayTime) < -10) {
+                            try {
+                                jwplayer().seek(prePlayTime);
+                                curPlayTime = jwplayer().getPosition();
+                            }
+                            catch (err) {
+                            }
+
+
+
+                            Notify('首次学习不能拖动滚动条，必须顺序看完视频', 'top-right', '5000', 'danger', 'fa-times', true);
+
+                            return;
+                        }
+                    }
+                }
+
+                $("#PlayTimeDiv").html(curPlayTime);
+
+                for (var i = 0; i < arrhidExamTime.length; i++) {
+
+                    if (i < arrhidExamFlag.length) {
+                        if (arrhidExamFlag[i] == "1") {
+                            continue;
+                        }
+                    }
+
+                    var varExamTime = arrhidExamTime[i];
+                    varExamTime = parseFloat(varExamTime);
+
+                    if (curPlayTime > varExamTime) {
+
+                        $("#hidExamPopFlag").val("true");
+                        $("#WeiKeExamLink").attr("href", $("#hidExamUrl").val() + arrhidLianXiID[i]);
+                        $("#WeiKeExamLink").click();
+
+
+                        try {
+                            jwplayer().pause();
+                        }
+                        catch (err) {
+                        }
+
+
+                        arrhidExamFlag[i] = "1";
+
+                        var tmpExamFlag = "";
+                        for (var f = 0; f < arrhidExamFlag.length; f++) {
+                            if (tmpExamFlag != "")
+                                tmpExamFlag += ",";
+
+                            tmpExamFlag += arrhidExamFlag[f];
+                        }
+                        $("#hidExamFlag").val(tmpExamFlag);
+
+                        break;
+                    }
+                }
+
+
+
+                if ($("#hidFirstStudentStudy").val() == "true") {
+
+                    $.ajax({
+                        url: "Ajax/ajax.aspx?m=" + Math.random(),
+                        type: "POST",
+                        data: {
+                            type: "SaveVideoPlayTime",
+                            DxaC_ID: $("#hidDxaC_ID").val(),
+                            StudentID: $("#hidUserID").val(),
+                            curPlayTime: curPlayTime,
+                            endPlayTime: endPlayTime
+                        },
+                        beforeSend: function () {
+                        },
+                        success: function (data) {
+                            var dt = eval(data);
+                            if (dt[0].result == "true") {
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                }
+
+
+            }
+
+            function WeiKeExamClose() {
+                $("#hidExamPopFlag").val("false");
+                //                jwplayer().play();
+            }
+
+
+            //加载题库列表
+            function loadAllCourse() {
+                $.ajax({
+                    url: "Ajax/ajaxlist.aspx?m=" + Math.random(),
+                    type: "GET",
+                    data: {
+                        id: $("#weikeID").val(),
+                        type: "insertLianXi"
+                    },
+                    cache: false,
+                    async: true,
+                    timeout: 10000,
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                        var dt = data.split("::::");
+
+                        $("#DivList").html(dt[0]);
+                    },
+                    error: function () {
+                        Notify('加载失败', 'top-right', '5000', 'danger', 'fa-times', true);
+                    }
+                });
+            }
+            function deleteInsertLianXi(ID) {
+                bootbox.confirm("你确认要删除？", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "Ajax/ajax.aspx?m=" + Math.random(),
+                            type: "POST",
+                            data: {
+                                type: "deleteInsertLianXi",
+                                id: ID
+                            },
+                            beforeSend: function () {
+                            },
+                            success: function (data) {
+                                var dt = eval(data);
+                                if (dt[0].result == "true") {
+                                    //Notify('删除成功', 'top-right', '1000', 'success', 'fa-check', true);
+                                    //parent.$.fancybox.close();
+                                    loadAllCourse();
+                                }
+                                else {
+                                    Notify('删除失败', 'top-right', '5000', 'danger', 'fa-times', true);
+                                }
+                            },
+                            error: function () {
+                                Notify('删除失败', 'top-right', '5000', 'danger', 'fa-times', true);
+                            }
+                        });
+                    }
+                });
+            }
+
+        </script>
+        <script type="text/javascript" src="../js/fancyBox_v2_1_5/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+        <script type="text/javascript" src="../js/fancyBox_v2_1_5/source/jquery.fancybox.js?v=2.1.5"></script>
+        <link rel="stylesheet" type="text/css" href="../js/fancyBox_v2_1_5/source/jquery.fancybox.css?v=2.1.6"
+            media="screen" />
+        <a id="XiaFaResLink" href="" class="yulanzuoye"></a><a id="WeiKeExamLink" href=""
+            class="WeiKeExam"></a>
+    </div>
+    <input name="hidExamTime" type="hidden" id="hidExamTime" />
+    <input name="hidLianXiID" type="hidden" id="hidLianXiID" />
+    <input name="hidExamFlag" type="hidden" id="hidExamFlag" />
+    <input name="hidExamPopFlag" type="hidden" id="hidExamPopFlag" value="false" />
+    <input name="hidExamUrl" type="hidden" id="hidExamUrl" value="EXAM2_KeQianLianXi_Show.aspx?type=&amp;tpID=6485&amp;HideTop=true&amp;HideReturn=true&amp;DxaC_ID=&amp;LID=" />
+    <input name="weikeID" type="hidden" id="weikeID" value="913" />
+    <input name="hidDxa_ID" type="hidden" id="hidDxa_ID" />
+    <input name="hidDxaC_ID" type="hidden" id="hidDxaC_ID" />
+    <input name="hidFirstStudentStudy" type="hidden" id="hidFirstStudentStudy" />
+    <input name="hidUserID" type="hidden" id="hidUserID" value="2232" />
+    </form>
+</body>
+</html>

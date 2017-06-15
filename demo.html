@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		课前微课资料
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="./js/jwplayer.js" type="text/javascript"></script>
+	<script src=".js/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function addBiji() { //提交笔记
+			var btn = $("#btn_submit");
+			btn.button('loading');
+			document.getElementById("bt_addBiji").click();
+			setTimeout(function() {
+				btn.button('reset');
+			}, 1000000);
+		}
+
+		function delBiji(bijiID) { //删除笔记
+			$("#hidBijiID").val(bijiID);
+			document.getElementById("bt_delBiji").click();
+		}
+
+		var time = 0;
+		setInterval("initSutdyTime()", 5000);
+
+		function initSutdyTime() {
+			//            time += 1;
+			//            var txt = formatSeconds(time);
+			//            $("#span_time").html(" 学习 " + txt);
+			addStudyTime();
+		}
+		//记录视频学习时间
+		function addStudyTime() {
+
+			var curPlayTime = 0;
+			var endPlayTime = 0;
+
+			try {
+				curPlayTime = jwplayer().getPosition();
+				endPlayTime = jwplayer().getDuration();
+			} catch (err) {}
+
+
+			$.ajax({
+				url: "../JYFXPJ/Ajax/WKTajax.aspx?m=" + Math.random(),
+				type: "POST",
+				data: {
+					type: "addStudyTime",
+					objID: $("#weikeID").val(),
+					objName: "",
+					curPlayTime: curPlayTime,
+					endPlayTime: endPlayTime,
+					table: "prodoc_ja_weike",
+					time: 5
+				},
+				beforeSend: function() {
+					//                    dlg.Msg.Lod("数据加载中,请稍后...", "popLoading1");
+				},
+				success: function(result) {
+					//                    dlg.clsLod("popLoading1");
+
+				},
+				error: function() {
+					//                    dlg.clsLod("popLoading1");
+					//                    dlg.Msg.Err("加载数据出错,请稍后重试!!");
+				}
+			});
+
+		}
+
+
+		function PageReloadBtnFun(strUrl) { //重播
+			setTimeout("PageReloadBtnFunTimeOut()", 5000);
+
+		}
+
+		function PageReloadBtnFunTimeOut() {
+			$("#PageReloadBtn").click();
+		}
+	</script>
+</head>
+
+<body>
+	<form name="form1" method="post" action="EXAM2_YuXi_Play.aspx?HideTop=true&amp;VID=913&amp;HideReturn=true" id="form1">
+		<div>
+			<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+			<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+			<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNjM2NDE2NzA3D2QWAgIDD2QWBAICD2QWBAIDDxYCHglpbm5lcmh0bWwFZTxsaW5rIGhyZWY9Ii4uL2pzL2JleW9uZC9ib290Y3NzL2Jvb3RzdHJhcF8xNHB4L2Nzcy9ib290c3RyYXAuY3NzP3ZlcnNpb249MTcwNTIzIiByZWw9InN0eWxlc2hlZXQiIC8+ZAIED2QWAgIBD2QWFgIBDxYCHgdWaXNpYmxlaBYCAgEPDxYCHghJbWFnZVVybAUiLi4vLi4vaW1hZ2VzL+aZuuaFp+ivvuWggl9sb2dvLnBuZ2RkAgUPFgIeBGhyZWZkFgICAQ8PFgIeBFRleHQFHTJhaXgxMO+8iOS6jOW5tOe6pyhhaXgp54+t77yJZGQCBw8WAh8BaGQCCQ8WAh8BaGQCCw8WAh8BaGQCDQ8WAh8BaGQCDw8WAh8BaGQCEQ8WAh8BaGQCEw9kFgICAQ8WAh8ABbUBICA8bGkgb25jbGljaz0iem9vbVNldCgxMDApIiAgIGNsYXNzPSJjaG9vc2UiICA+MTAwJTwvbGk+ICAgPGxpIG9uY2xpY2s9Inpvb21TZXQoMTIwKSIgID4xMjAlPC9saT4gICA8bGkgb25jbGljaz0iem9vbVNldCgxNTApIiAgPjE1MCU8L2xpPiAgIDxsaSBvbmNsaWNrPSJ6b29tU2V0KDIwMCkiICA+MjAwJTwvbGk+IGQCFQ8WAh8BaGQCFw8PFgIfBAVmJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ZGQCBw8WAh4Fc3R5bGUFJXdpZHRoOjEwMCU7ZGlzcGxheTpub25lO2hlaWdodDo0ODBweDtkZPKfPQF+TayEbAx/CA5XcFMv10VbBmjS/Rx5YGKKfcCZ"
+			/>
+		</div>
+
+		<div>
+
+			<link rel="stylesheet" type="text/css" href="../css/hover-min.css?version=170523">
+			<link rel="stylesheet" type="text/css" href="../js/fileinput/css/default.css?version=170523">
+			<link href="../js/fileinput/css/fileinput.css?version=170523" media="all" rel="stylesheet" type="text/css" />
+			<link href="../js/beyond/css/bootstrap.min.css?version=170523" rel="stylesheet" />
+			<link href="../js/beyond/css/font-awesome.min.css?version=170523" rel="stylesheet" />
+
+			<link href="../js/beyond/css/beyond.css?version=170523" rel="stylesheet" />
+			<script src="../js/beyond/js/skins.min.js?version=170523"></script>
+			<link href="../js/beyond/css/weather-icons.min.css?version=170523" rel="stylesheet" />
+			<link href="../js/beyond/css/demo.css?version=170523" rel="stylesheet" />
+			<link href="../js/beyond/css/typicons.min.css?version=170523" rel="stylesheet" />
+			<link href="../js/beyond/css/animate.min.css?version=170523" rel="stylesheet" />
+			<script src="../js/beyond/js/jquery.min.js?version=170523"></script>
+			<script src="../js/beyond/js/bootstrap.min.js?version=170523"></script>
+			<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js?version=170523"></script>
+			<script src="../js/beyond/js/beyond.min.js?version=170523"></script>
+			<script src="../js/beyond/js/validation/bootstrapValidator.js?version=170523"></script>
+			<script src="../js/beyond/js/editors/summernote/summernote.js?version=170523"></script>
+			<script src="../js/beyond/js/bootbox/bootbox.js?version=170523"></script>
+			<script src="../js/beyond/js/toastr/toastr.js?version=170523"></script>
+			<script src="../js/beyond/js/fuelux/spinbox/fuelux.spinbox.min.js?version=170523"></script>
+			<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js?version=170523"></script>
+			<script src="../js/fileinput/js/fileinput.js?version=170523" type="text/javascript"></script>
+			<script src="../js/fileinput/js/fileinput_locale_zh.js?version=170523" type="text/javascript"></script>
+			<script type="text/javascript" src="../dewplayer/swfobject.js?version=170523"></script>
+
+			<script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js?version=170523"></script>
+			<link rel="stylesheet" type="text/css" href="../EXAM/css/Exam.css?version=170523">
+
+			<!--Bootstrap Date Range Picker-->
+			<script src="../js/beyond/js/datetime/moment.js?version=170523"></script>
+			<script src="../js/beyond/js/datetime/daterangepicker.js?version=170523"></script>
+
+
+			<script src="../js/FlipClock/compiled/flipclock.js?version=170523"></script>
+			<link rel="stylesheet" type="text/css" href="../js/FlipClock/compiled/flipclock.css?version=170523" />
+
+			<script type="text/javascript" src="../js/fancyBox_v2_1_5/lib/jquery.mousewheel-3.0.6.pack.js?version=170523"></script>
+			<script type="text/javascript" src="../js/fancyBox_v2_1_5/source/jquery.fancybox.js?v=2.1.5"></script>
+			<link rel="stylesheet" type="text/css" href="../js/fancyBox_v2_1_5/source/jquery.fancybox.css?v=2.1.6" media="screen" />
+			<link href="../css/animate.css?version=170523" type="text/css" rel="stylesheet" />
+			<link href="../js/beyond/bootcss/bootstrap_14px/css/bootstrap.css?version=170523" rel="stylesheet" />
+			<link href="../js/beyond/css/font-awesome.min.css?version=170523" rel="stylesheet" />
+
+			<div class="container" style=" width:98%;">
+				<div id="panelReturn">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="pull-left">
+								<h5>18四个太阳_标清</h5></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6 col-md-9 col-sm-12">
+						<div id="flvPanel" align="center">
+
+							<div id='container2'>Loading the player ...</div>
+							<script type='text/javascript'>
+								jwplayer('container2').setup({
+									screencolor: '0x000000',
+									flashplayer: './js/player.swf',
+									file: './video/636266400737679915_2091.flv',
+									height: 380,
+									width: '100%',
+									events: {
+										onComplete: function() {
+											PageReloadBtnFun('../res/JYFXPJ/Video/2017_4_1/636266400737679915_2091.flv')
+										}
+									}
+
+								});
+							</script>
+
+							<div style="overflow:hidden; margin:20px 0px;">
+								<div onclick="javascript:jwplayer().play();" class="btn btn-info"><i class="glyphicon glyphicon-play"></i>播放 <i class="glyphicon glyphicon-pause"></i>暂停</div>
+								<div onclick="PageReloadBtnFunTimeOut()" class="btn btn-info"><i class="glyphicon glyphicon-repeat"></i>重播</div>
+								<a href="../res/JYFXPJ/Video/2017_4_1/636266400737679915_2091.flv">
+									<div class="btn btn-warning pull-right"><i class="glyphicon glyphicon-download-alt"></i>下载视频</div>
+								</a>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-lg-6 col-md-3 col-sm-12">
+
+						<div id="HomeWeikeFilePanel">
+
+						</div>
+						<div id="LianXiPanel">
+
+							<div class="list-group">
+								<a href="EXAM2_keqianlianxi_Show.aspx?LID=115&tpID=6485&HideTop=true" class="yulanzuoye list-group-item">
+									<div class="btn hvr-wobble-top btn-success btn-xs">
+										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 练习
+									</div> 调查与收集数据练习1 <span class="label label-danger">未完成</span>
+								</a>
+							</div>
+						</div>
+						<div id="UpdatePanel1">
+
+							<div id="bijiDiv" class="panel panel-default">
+								<div class="panel-heading">
+									我的笔记</div>
+								<div class="panel-body">
+									<div id="bijiPanel"></div>
+									<div class="well">
+										<div id="ShouXieInputPanel"></div>
+										<textarea name="txbBiJi" rows="2" cols="20" id="txbBiJi" style="height:100px;width:100%;"></textarea>
+
+										<div align="center" style="margin-top: 10px;">
+											<button id="voiceBtn" type="button" class="btn hvr-wobble-top btn-default" style="display: none;" onclick="voiceInput()">
+                                                语音输入</button>
+											<button type="button" id="btn_submit" class="btn hvr-wobble-top btn-primary" data-loading-text="加载中..." autocomplete="off" onclick="addBiji()">
+                                                提交</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="display: none;">
+								<input name="hidBijiID" type="hidden" id="hidBijiID" />
+								<input type="submit" name="bt_addBiji" value="" id="bt_addBiji" />
+								<input type="submit" name="bt_delBiji" value="" id="bt_delBiji" />
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+			<script src="../js/beyond/js/slimscroll/jquery.slimscroll.min.js"></script>
+			<script src="../js/beyond/js/beyond.min.js"></script>
+			<div id="foot_WisdomClass_foot" style="background-color: #f8f8f8">
+				<div class="container-fluid" style="text-align: center; line-height: 40px; font-size: 12px;
+        margin-top: 100px;">
+					<span id="foot_footLabel"></span>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+
+
+				var varlocalId = "";
+
+				function voiceInput() {
+
+					if ($("#voiceBtn").html() == "语音输入") {
+						$("#voiceBtn").html("停止语音输入");
+						wx.startRecord();
+					} else {
+						$("#voiceBtn").html("语音输入");
+
+
+						wx.stopRecord({
+							success: function(res) {
+								varlocalId = res.localId;
+
+
+								wx.translateVoice({
+									localId: varlocalId, // 需要识别的音频的本地Id，由录音相关接口获得
+									isShowProgressTips: 1, // 默认为1，显示进度提示
+									success: function(res) {
+										// alert(res.translateResult); // 语音识别的结果
+										$("#txbBiJi").val(res.translateResult);
+									}
+								});
+
+							}
+						});
+					}
+
+				}
+
+			</script>
+			<script type="text/javascript" src="../js/fancyBox_v2_1_5/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+			<script type="text/javascript" src="../js/fancyBox_v2_1_5/source/jquery.fancybox.js?v=2.1.5"></script>
+			<link rel="stylesheet" type="text/css" href="../js/fancyBox_v2_1_5/source/jquery.fancybox.css?v=2.1.6" media="screen" />
+		</div>
+		<input name="hidExamTime" type="hidden" id="hidExamTime" />
+		<input name="hidLianXiID" type="hidden" id="hidLianXiID" />
+		<input name="hidExamFlag" type="hidden" id="hidExamFlag" />
+		<input name="hidExamPopFlag" type="hidden" id="hidExamPopFlag" value="false" />
+		<input name="hidExamUrl" type="hidden" id="hidExamUrl" value="EXAM2_KeQianLianXi_Show.aspx?type=&amp;tpID=6485&amp;HideTop=true&amp;HideReturn=true&amp;DxaC_ID=&amp;LID=" />
+		<input name="weikeID" type="hidden" id="weikeID" value="913" />
+		<input name="hidDxa_ID" type="hidden" id="hidDxa_ID" />
+		<input name="hidDxaC_ID" type="hidden" id="hidDxaC_ID" />
+		<input name="hidFirstStudentStudy" type="hidden" id="hidFirstStudentStudy" />
+		<input name="hidUserID" type="hidden" id="hidUserID" value="2232" />
+	</form>
+</body>
+
+</html>

@@ -110,7 +110,8 @@
 .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
     content: "\f108";
     color: #00bda5;
-    line-height: 1.9;
+    margin-top: 0.1em;
+    font-weight: bold;
 }
 
 .vjs-icon-fullscreen-exit, .video-js.vjs-fullscreen .vjs-fullscreen-control .vjs-icon-placeholder {
@@ -476,8 +477,8 @@ body.vjs-full-window {
     width: 3em;
     display: block;
     position: absolute;
-    top: 132px;
-    left: 320px;
+    top: 3em;
+    left: 9em;
     padding: 0;
     cursor: pointer;
     opacity: 1;
@@ -1595,4 +1596,5 @@ video::-webkit-media-text-track-display {
 
 .vjs-remaining-time-display {
     color: #00bda5;
+    font-weight: bold;
 }

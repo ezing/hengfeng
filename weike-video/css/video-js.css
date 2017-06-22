@@ -65,7 +65,9 @@
 }
 
 .vjs-icon-volume-mute:before, .video-js .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder:before {
-    content: "\f104";
+    content: "";
+    background: url('./img/no-volume.png') no-repeat;
+    background-position: center;
 }
 
 .vjs-icon-volume-low, .video-js .vjs-mute-control.vjs-vol-1 .vjs-icon-placeholder {
@@ -75,7 +77,7 @@
 }
 
 .vjs-icon-volume-low:before, .video-js .vjs-mute-control.vjs-vol-1 .vjs-icon-placeholder:before {
-    content: "\f105";
+    content: "";
 }
 
 .vjs-icon-volume-mid, .video-js .vjs-mute-control.vjs-vol-2 .vjs-icon-placeholder {
@@ -97,7 +99,6 @@
 .vjs-icon-volume-high:before, .video-js .vjs-mute-control .vjs-icon-placeholder:before {
     content: "";
     background: url(./img/volume.png) no-repeat;
-    /* background-size: 100% 100%; */
     background-position: center;
 }
 
@@ -110,8 +111,9 @@
 .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
     content: "\f108";
     color: #00bda5;
-    margin-top: 0.1em;
+    line-height: 3em;
     font-weight: bold;
+
 }
 
 .vjs-icon-fullscreen-exit, .video-js.vjs-fullscreen .vjs-fullscreen-control .vjs-icon-placeholder {
@@ -477,8 +479,8 @@ body.vjs-full-window {
     width: 3em;
     display: block;
     position: absolute;
-    top: 3em;
-    left: 9em;
+    top: 50%;
+    left: 42%;
     padding: 0;
     cursor: pointer;
     opacity: 1;
@@ -712,7 +714,7 @@ body.vjs-full-window {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 3.0em;
+    height: 4.5em;
     background-color: #2B333F;
     background-color: #fff;
 }
@@ -1092,7 +1094,7 @@ body.vjs-full-window {
 }
 
 .video-js .vjs-volume-bar {
-    margin: 1.35em 0.45em;
+    margin: 2.15em 0.45em;
 }
 
 .vjs-volume-bar.vjs-slider-horizontal {
@@ -1231,8 +1233,8 @@ body.vjs-full-window {
     -webkit-flex: none;
     -ms-flex: none;
     flex: none;
-    font-size: 1em;
-    line-height: 3em;
+    font-size: 2em;
+    line-height: 2.6em;
     min-width: 2em;
     width: auto;
     padding-left: 1em;
@@ -1597,4 +1599,8 @@ video::-webkit-media-text-track-display {
 .vjs-remaining-time-display {
     color: #00bda5;
     font-weight: bold;
+}
+
+.vjs-default-skin {
+    margin: 0 auto ;
 }

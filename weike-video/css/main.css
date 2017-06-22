@@ -1,0 +1,32 @@
+#myplayer {
+    border: 1px solid #cccccc;
+    border-top: none;
+}
+
+.test-panel .test-content {
+    width: 960px;
+    margin: 0 auto;
+    border: 1px solid #cccccc;
+    border-top: none;
+    display: block;
+    padding: 10px 20px;
+    border-radius: 2px;
+    height: 56px;
+}
+
+.test-panel .test-content:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.test-panel .test-status {
+    line-height: 36px;
+    float: right;
+    color: red;
+}
+
+.test-panel .btn-green {
+    color: #fff;
+    background-color: #00bda5;
+    border-color: #00bda5;
+}

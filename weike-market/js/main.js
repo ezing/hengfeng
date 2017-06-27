@@ -46,7 +46,6 @@ function renderWeikeList(data) {
         html = [];
     $(list).each(function(index, item) {
         item.SPUrl_str = item.SPUrl.replace(/flv/, 'mp4');
-        // item.SPMC_str = item.SPMC.length < 16 ? item.SPMC :
         html.push(config.weike_item.jstpl_format(item));
     });
     $('.video-container').html(html.join(''));
@@ -115,14 +114,15 @@ $(document.body).on('click', '.video-href', function(e) {
     var player = videojs('modal-video');
     player.src($e.data('url'));
     $('.modal').modal('toggle');
-    setTimeout(function(){
+    //fix modal size
+    player.on('loadeddata', function() {
         var currentWidth = $('#modal-video').width();
         if (currentWidth >= 630) {
             $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
         } else {
             $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
         }
-    }, 1000)
+    })
 })
 
 $(document).ready(function() {

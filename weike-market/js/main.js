@@ -112,8 +112,17 @@ $(document.body).on('click', '.go-search', function() {
 $(document.body).on('click', '.video-href', function(e) {
     var $e = $(e.target);
     $('.modal-title').html($e.data('title'));
-    videojs('modal-video').src($e.data('url'))
+    var player = videojs('modal-video');
+    player.src($e.data('url'));
     $('.modal').modal('toggle');
+    setTimeout(function(){
+        var currentWidth = $('#modal-video').width();
+        if (currentWidth >= 630) {
+            $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
+        } else {
+            $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
+        }
+    }, 1000)
 })
 
 $(document).ready(function() {

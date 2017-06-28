@@ -93,6 +93,9 @@
     width: 100%;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: white;
+    z-index: 100;
 }
 
 .subjects ul li {
@@ -116,27 +119,34 @@
 
 .back_btn {
     position: absolute;
-    left: 20px;
-    top: 8px;
+    left: 9px;
+    top: 5px;
     border-radius: 0;
     border-right: 1px solid #ccc;
-    padding-right: 16px;
+    padding-left: 22px;
+    padding-right: 25px;
     background: url('./img/back.png');
     background-repeat: no-repeat;
-    height: 65%;
+    background-position: center;
+    height: 80%;
 }
 
 .forward_btn {
     position: absolute;
-    right: 20px;
-    top: 8px;
+    right: 9px;
+    top: 5px;
     border-radius: 0;
     border-left: 1px solid #ccc;
-    padding-left: 16px;
+    padding-left: 22px;
+    padding-right: 25px;
     background: url('./img/forward1.png');
     background-repeat: no-repeat;
-    background-position: right;
-    height: 65%;
+    background-position: center;
+    height: 80%;
+}
+
+.forward_btn:focus, .forward_btn:active{
+    outline: none;
 }
 
 .search {

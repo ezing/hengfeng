@@ -20,6 +20,9 @@ var defaultParam = {
     pageSize: 15,
     searchText: ''
 }
+
+// defaultParam.gradeID = window.external.getGradeID()
+
 var paramCache = null;
 
 function getWeikeList(param, cb) {

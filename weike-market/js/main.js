@@ -93,6 +93,7 @@ $(document.body).on('click', '.subjects ul > li', function(e) {
     // $('.subject-slt').attr('data-sid', $e.data('type')).html($(e.target).text());
     $('.subject-slt').html($e.text());
     $('.subjects > ul').toggle();
+    $('.search-input').val('');
     var subjectID = $e.data('type');
     paramCache.subjectID = subjectID;
     paramCache.pageIndex = 1;

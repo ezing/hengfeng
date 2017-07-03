@@ -133,6 +133,10 @@
     height: 80%;
 }
 
+.back_btn:focus, .back_btn:active {
+    outline:none;
+}
+
 .forward_btn {
     position: absolute;
     right: 9px;

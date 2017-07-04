@@ -1,7 +1,3 @@
-/**
- * Created by wenbinzhang on 16/1/12.
- */
-
 window.debug = true;
 
 // 公共库
@@ -109,108 +105,6 @@ window.debug = true;
             $.ajax(param);
         },
 
-        formateRate: function (rate) {
-            var str = '';
-            var num = parseFloat((rate * 100).toFixed(2));
-            str = num + '%';
-            return str;
-        },
-
-        formateDate: function (date) {
-            var str = '', date = date + '';
-            if (date && date.length == 8) {
-                str = date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2);
-            } else {
-                str = date;
-            }
-            return str;
-        },
-
-        formateTime: function (time) {
-
-            function _addZore(num) {
-                if (num < 10) {
-                    num = '0' + num;
-                }
-                return num;
-            }
-
-            if (typeof time != 'object') {
-                time = '' + time;
-                if (time.length > 12) {
-                    time = new Date(parseInt(time));
-                } else {
-                    time = new Date(parseInt(time) * 1000);
-                }
-            }
-
-            var year = time.getFullYear();
-            var month = _addZore(time.getMonth() + 1);
-            var date = _addZore(time.getDate());
-            var hours = _addZore(time.getHours());
-            var minutes = _addZore(time.getMinutes());
-            var seconds = _addZore(time.getSeconds());
-            return {
-                year: year,
-                month: month,
-                date: date,
-                hours: hours,
-                minutes: minutes,
-                seconds: seconds,
-                str: year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds
-            };
-
-        },
-
-        formateMoney: function (money, fixed, len) {
-            var n = parseInt(fixed) || 2,
-                len = parseInt(len) || 3,
-                money = parseFloat((money + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "",
-                l = money.split(".")[0].split("").reverse(),
-                r = money.split(".")[1],
-                t = "";
-
-            for (i = 0; i < l.length; i++) {
-                t += l[i] + ((i + 1) % len == 0 && (i + 1) != l.length ? "," : "");
-            }
-
-            if (fixed == 0) {
-                return t.split("").reverse().join("");
-            } else {
-                return t.split("").reverse().join("") + "." + r;
-            }
-
-        },
-
-        formateMoneyByM: function (money, fixed, len) {
-            var money = parseInt(money) || 0;
-            return M.util.formateMoney(parseFloat(money / 100).toFixed(2), fixed, len);
-        },
-
-        addErr: function (str) {
-            return '<span class="label label-sm label-danger">' + str + '</span>';
-        },
-
-        addSucc: function (str) {
-            return '<span class="label label-sm label-success">' + str + '</span>';
-        },
-
-        addDef: function (str) {
-            return '<span class="label label-sm label-default">' + str + '</span>';
-        },
-
-        addPri: function (str) {
-            return '<span class="label label-sm label-primary">' + str + '</span>';
-        },
-
-        addInfo: function (str) {
-            return '<span class="label label-sm label-info">' + str + '</span>';
-        },
-
-        addWarn: function (str) {
-            return '<span class="label label-sm label-warning">' + str + '</span>';
-        },
-
         addParam: function (url, obj) {
             var p = M.util.param(obj);
             if (!/\?/.test(url) && !/#/.test(url)) {
@@ -266,18 +160,6 @@ window.debug = true;
             } else {
                 return url;
             }
-        },
-
-        showPage: function (pagekey, param) {
-            var hash = 'cpage=' + pagekey;
-
-            if (typeof param == 'object') {
-                for (var i in param) {
-                    hash += '&' + i + '=' + encodeURIComponent(param[i]);
-                }
-            }
-
-            location.hash = hash;
         },
 
         convertObjParamToStr: function (obj) {
@@ -778,74 +660,6 @@ window.debug = true;
 
 }());
 
-
-;(function () {
-
-    var config = {
-        urls: {
-            getPublicKey: '/onecollection_admin/get_pub_key'
-        }
-    };
-
-    var encrypt = null;
-
-    var publicKey = '';
-
-    function getKey(cb) {
-        if (publicKey) {
-            if (typeof cb == 'function') {
-                cb(encrypt);
-            }
-        } else {
-
-            var url = config.urls.getPublicKey;
-            var param = {};
-
-            M.ajax({
-                stopAction: true,
-                url: url,
-                dataType: 'json',
-                type: 'POST',
-                contentType: 'application/json',
-                data: param,
-                success: function (ret) {
-                    if (ret && ret.code == 0 && ret.data && ret.data.pub_key) {
-                        publicKey = ret.data.pub_key;
-                        encrypt.setPublicKey(publicKey);
-                        if (typeof cb == 'function') {
-                            cb(encrypt);
-                        }
-                    } else {
-                        alert(ret.msg);
-                    }
-                },
-                error: function () {
-                    alert('网络错误,获取密码加密公钥失败!');
-                }
-            });
-        }
-    };
-
-    function init(cb) {
-        if (typeof JSEncrypt == 'function') {
-            if (typeof cb == 'function') {
-                getKey(cb);
-            }
-        } else {
-            M.util.loadJS('./js/lib/jsencrypt.js', function () {
-                encrypt = new JSEncrypt();
-                if (typeof cb == 'function') {
-                    getKey(cb);
-                }
-            });
-        }
-    };
-
-    window.g_rsa = {
-        init: init
-    }
-}());
-
 ;(function () {
 
     var loadedFileCache = {};
@@ -900,49 +714,5 @@ window.debug = true;
 
     window.g_loadFiles = loadFiles;
 
-
-}());
-
-// 上传封装
-;(function () {
-
-    var tokenUrl = 'http://218.17.81.211:45852/onecollection_admin/qiniu_uptoken';
-    //var tokenUrl = 'http://admin.collection360.dafyjk.com/api/collection_admin/qiniu_uptoken_by_ns?ns=collection-firstparty';
-
-    function initDown(cb) {
-        if (typeof cb == 'function') {
-            if (typeof Qiniu == 'object' && typeof Qiniu.uploader == 'function') {
-                cb();
-            } else {
-                setTimeout(function () {
-                    initDown(cb);
-                }, 1000);
-            }
-        }
-    };
-
-    function init(cb) {
-        var fn = arguments.callee;
-        if (!fn.hasLoaded) {
-            fn.hasLoaded = true;
-            M.util.loadJS('js/qiniu/plupload/plupload.full.min.js', function () {
-                M.util.loadJS('js/qiniu/qiniu.js', function () {
-                    initDown(cb);
-                });
-            });
-
-        } else {
-            initDown(cb);
-        }
-    };
-
-    function getToken() {
-        return tokenUrl;
-    };
-
-    window.g_upload = {
-        init: init,
-        getToken: getToken
-    }
 
 }());

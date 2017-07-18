@@ -8,8 +8,19 @@
     color: #00bda5;
 }
 
-.btn-detail {
+.btn-detail, .btn-back {
     float: right;
     color: #666666;
     font-size: 14px;
+}
+
+/*mistakes*/
+.container h3 {
+    text-align: center;
+    color: #00bda5;
+    font-weight: bold;
+}
+
+.left-panel {
+    border-right: 1px solid #ccc;
 }

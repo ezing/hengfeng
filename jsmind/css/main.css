@@ -1,0 +1,38 @@
+.buttons {
+    margin-top: 20px;
+}
+
+.nodes {
+    margin: 10px 0;
+    display: inline;
+    /*overflow: hidden;*/
+}
+
+.nodes > button {
+    margin-right: 10px;
+    position: relative;
+}
+
+.node:after {
+    content: 'x';
+    right: -6px;
+    font-size: 20px;
+    top: -10px;
+    color: red;
+    font-weight: bold;
+    position: absolute;
+    width: 14px;
+}
+
+.child-nodes {
+    margin-top: 10px;
+    display: none;
+}
+
+#jsmind_container {
+    margin-top: 10px;
+    width: 100%;
+    height: 500px;
+    border: solid 1px #ccc;
+    background: #f4f4f4;
+}

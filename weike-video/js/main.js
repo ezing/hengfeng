@@ -9,13 +9,13 @@ var config = {
     urlPre: 'http://w21.youkext.com/WebService/HuDongKeTang/'
 };
 
-var vid = 1423;
-var userLoginName = 'as1';
-var classId = 125;
+// var vid = 1423;
+// var userLoginName = 'as1';
+// var classId = 125;
 
-// var vid = window.external.getVID();
-// var userLoginName = window.external.getLoginName();
-// var classId = window.external.getClassID();
+var vid = window.external.getVID();
+var userLoginName = window.external.getLoginName();
+var classId = window.external.getClassID();
 
 function getWeikeDetails(id, player) {
     $.ajax({

@@ -132,8 +132,14 @@ $(document.body).on('click', '.video-href', function(e) {
     //fix modal size
     player.on('loadeddata', function() {
         var currentWidth = $('#modal-video').width();
-        if (currentWidth >= 630) {
+        if (630 <= currentWidth) {
             $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
+            if (currentWidth > 820) {
+                $('.modal-video-dimensions').css({
+                    'width': '820px',
+                    'height': '462px'
+                })
+            }
         } else {
             $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
         }

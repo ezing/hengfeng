@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>jsMind</title>
+    <link type="text/css" rel="stylesheet" href="./css/jsmind.css" />
+    <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/main.css" />
+</head>
+
+<body>
+    
+    <ul>
+        <li ontouchmove="touching(event)" ontouchend="move(event)">aaa</li>
+        <li ontouchmove="touching(event)" ontouchend="move(event)">bbb</li>
+        <li ontouchmove="touching(event)" ontouchend="move(event)">ccc</li>
+        <li ontouchmove="touching(event)" ontouchend="move(event)">ddd</li>
+        <li ontouchmove="touching(event)" ontouchend="move(event)">eee</li>
+    </ul>
+    <div id="jsmind_container"></div>
+    <script src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/jsmind.js"></script>
+    <script type="text/javascript" src="./js/jsmind.draggable.js"></script>
+    <script type="text/javascript">
+        var mind = {
+            "meta": {
+                "name": "demo",
+                "author": "hizzgdev@163.com",
+                "version": "0.2",
+            },
+            "format": "node_array",
+            "data": [{
+                    "id": "root",
+                    "isroot": true,
+                    "topic": "jsMind"
+                },
+
+                {
+                    "id": "sub1",
+                    "parentid": "root",
+                    "topic": "sub1",
+                    "background-color": "#0000ff"
+                },
+                {
+                    "id": "sub2",
+                    "parentid": "sub1",
+                    "topic": "sub2",
+                    "background-color": "#0000ff"
+                }
+            ]
+        };
+        var options = {
+            container: 'jsmind_container',
+            editable: true,
+            theme: 'primary'
+        }
+        var jm = jsMind.show(options, mind);
+        // jm.set_readonly(true);
+        // var mind_data = jm.get_data();
+        // alert(mind_data);
+        // jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
+        // jm.set_node_color('sub21', 'green', '#ccc');
+
+        function add_node(name) {
+            var _node = jm.get_root();
+            var node = jm.add_node(_node, name, name);
+            return node;
+        }
+
+        function touching(e) {
+            // console.log(ev);
+            e.preventDefault();
+        }
+
+        function move(e) {
+            e.preventDefault();
+            //检测是否在div内
+            var x = e.changedTouches[0].pageX;
+            var y = e.changedTouches[0].pageY;
+            var jsmind_area = document.getElementById('jsmind_container');
+            var divx1 = jsmind_area.offsetLeft;
+            var divy1 = jsmind_area.offsetTop;
+            var divx2 = jsmind_area.offsetLeft + jsmind_area.offsetWidth;
+            var divy2 = jsmind_area.offsetTop + jsmind_area.offsetHeight;
+            if (divx1 < x && x < divx2 && divy1 < y && y < divy2) {
+                add_node(e.target.innerHTML);
+            }
+        }
+
+        function end(e) {
+            // console.log(e.changedTouches[0].clientX);
+            // console.log(e.changedTouches[0].clientY);
+        }
+    </script>
+</body>
+
+</html>

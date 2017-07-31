@@ -3,8 +3,78 @@ var options = {
     editable: true,
     theme: 'primary'
 }
-var jm = jsMind.show(options);
+// var mind = {
+//     meta: {
+//         name: 'demo',
+//         author: 'hizzgdev@163.com',
+//         version: '0.2'
+//     },
+//     format: 'node_array',
+//     data: [{
+//             "id": "root",
+//             "isroot": true,
+//             "topic": "jsMind"
+//         },
+//
+//         {
+//             "id": "sub1",
+//             "parentid": "root",
+//             "topic": "sub1"
+//         },
+//         {
+//             "id": "sub11",
+//             "parentid": "sub1",
+//             "topic": "sub11"
+//         },
+//         {
+//             "id": "sub12",
+//             "parentid": "sub1",
+//             "topic": "sub12"
+//         },
+//         {
+//             "id": "sub13",
+//             "parentid": "sub1",
+//             "topic": "sub13"
+//         },
+//
+//         {
+//             "id": "sub2",
+//             "parentid": "root",
+//             "topic": "sub2"
+//         },
+//         {
+//             "id": "sub21",
+//             "parentid": "sub2",
+//             "topic": "sub21"
+//         },
+//         {
+//             "id": "sub22",
+//             "parentid": "sub2",
+//             "topic": "sub22"
+//         },
+//
+//         {
+//             "id": "sub3",
+//             "parentid": "root",
+//             "topic": "sub3"
+//         },
+//     ]
+// };
+var jm = jsMind.show(options),
+    root = jm.get_root();
+var list = [root];
 
+function getAllNodes(node) {
+    if (!node.children.length) {
+        return list;
+    } else {
+        $.each(node.children, function(index, val) {
+            list.push(val);
+            getAllNodes(val);
+        })
+    }
+    return list;
+}
 
 function allowDrop(e) {
     e.preventDefault();
@@ -15,45 +85,50 @@ function drag(e) {
         _text = $e.text();
     if (_text && _text != '') {
         e.dataTransfer.setData("Text", _text);
-        // $e.remove();
-        // e.dataTransfer.setData("Text", _text);
-        // ev.dataTransfer.setData("Text", $(ev.target).val());
     }
 }
 
 function end(e) {
-    $(e.target).remove();
-    // if ($('.nodes').children().length == 0) {
-    //     $('.nodes').html('无');
-    // }
+    var $e = $(e.target);
+    if (jm.get_node($e.text())) {
+        $e.remove();
+    } else {
+        alert('请移动到目标节点区域')
+    }
 }
 
 function drop(e) {
     e.preventDefault();
     var name = e.dataTransfer.getData("Text");
-    if (name) {
+    var x = e.pageX,
+        y = e.pageY;
+    var all_nodes = getAllNodes(jm.get_root());
+    if (all_nodes.length == 1) {
         addNode(name);
+    } else {
+        $.each(all_nodes, function(index, val) {
+            var $e = $(val._data.view.element);
+            var offsetX1 = $e.offset().left;
+            var offsetX2 = $e.offset().left + $e.outerWidth();
+            var offsetY1 = $e.offset().top;
+            var offsetY2 = $e.offset().top + $e.outerHeight();
+            if (offsetX1 < x && x < offsetX2 && offsetY1 < y && y < offsetY2) {
+                console.log(val.topic);
+                jm.add_node(val, name, name)
+            }
+        })
     }
+    // if (name) {
+    //     addNode(name);
+    // }
 }
 
 function createNode(name) {
-    // var root_node_html = '根节点（不可删除）：<button class="btn btn-default" contenteditable="true">' + name + '</button>';
-    // var html = '<input class="btn btn-default" value="' + name + '"draggable="true" ondragstart="drag(event)" style="width:80px"/>';
-    // if ($('.add-node').text() == '新建根节点') {
-    //     jm.update_node('root', name);
-    //     $('.root-node').html(root_node_html).show();
-    //     $('.add-node').html('新建子节点');
-    //     $('.del-node').removeClass('hide');
-    // } else {
-    // }
     if ($('.nodes').html().indexOf(name) != -1 || jm.get_node(name)) {
         alert('节点已存在');
         return;
     } else {
-
         var html = '<button class="btn btn-default" draggable="true" ondragstart="drag(event)" ondragend="end(event)">' + name + '</button>';
-        // var $button = $(html);
-        // $button.data('vm', vm);
         $('.nodes').append(html);
         $('.child-nodes').show();
     }
@@ -64,15 +139,9 @@ function addNode(name) {
     if (!_node) {
         _node = jm.get_root();
     }
-
     jm.add_node(_node, name, name);
 }
 $(document.body).on('click', '.add-node', function(e) {
-    // var node_name = '';
-    // if ($('.add-node').text() == '新建根节点') {
-    //     node_name = prompt('请输入根节点名')
-    // } else {
-    // }
     $('.nodes > button').removeClass('node');
     var node_name = prompt('请输入节点名');
     if (node_name) {

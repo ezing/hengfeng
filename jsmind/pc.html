@@ -7,6 +7,8 @@
     <title>jsMind</title>
     <link type="text/css" rel="stylesheet" href="./css/jsmind.css" />
     <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/jquery.contextMenu.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="./css/main.css" />
 
 </head>
@@ -18,12 +20,12 @@
             <button class="btn btn-default del-node">删除节点</button>
         </div>
 
-        <div class="child-nodes">
+        <!-- <div class="child-nodes"> -->
             <!-- <span style="line-height: 2.4">新增节点：</span> -->
-            <div class="nodes"></div>
-        </div>
+        <!-- </div> -->
+        <div class="nodes"></div>
 
-        <div id="jsmind_container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true">
+        <div id="jsmind_container" ondrop="drop(event)" ondragover="allowDrop(event)">
             <span style="float: right">双击可编辑节点内容</span>
         </div>
 
@@ -31,7 +33,8 @@
     <script src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jsmind.js"></script>
     <script type="text/javascript" src="./js/jsmind.draggable.js"></script>
-    <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/jquery.contextMenu.min.js"></script>
+    <script type="text/javascript" src="./js/pc.js"></script>
 </body>
 
 </html>

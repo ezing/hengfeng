@@ -3,14 +3,23 @@
 }
 
 .nodes {
-    margin: 10px 0;
-    display: inline;
+    margin-top: 10px;
+    display: inline-block;
     /*overflow: hidden;*/
 }
 
-.nodes > button {
+.tag {
     margin-right: 10px;
     position: relative;
+    background-color: #428bca;
+    color: #fff;
+    border-color: #357ebd;
+}
+
+.tag:hover {
+    background-color: #3276b1;
+    color: white;
+    border-color: #285e8e;
 }
 
 .node:after {

@@ -234,6 +234,8 @@
             var nodeid = jview.get_binded_nodeid(el);
             if(!!nodeid){
                 var node = this.jm.get_node(nodeid);
+                // console.log(node.get_location());
+                // console.log(node);
                 if(!node.editable){return;}
                 if(!node.isroot){
                     this.reset_shadow(el);

@@ -103,7 +103,7 @@
     jm.direction = {left:-1,center:0,right:1};
     jm.event_type = {show:1,resize:2,edit:3,select:4};
 
-    jm.node = function(sId,iIndex,sTopic,oData,bIsRoot,oParent,eDirection,bExpanded){
+    jm.node = function(sId,iIndex,sTopic,oData,bIsRoot,oParent,eDirection,bExpanded,bEditable){
         if(!sId){logger.error('invalid nodeid');return;}
         if(typeof iIndex != 'number'){logger.error('invalid node index');return;}
         if(typeof bExpanded === 'undefined'){bExpanded = true;}
@@ -117,7 +117,7 @@
         this.expanded = !!bExpanded;
         this.children = [];
         this._data = {};
-        this.editable = true;
+        this.editable = bEditable;
     };
 
     jm.node.compare=function(node1,node2){
@@ -206,14 +206,14 @@
             }
         },
 
-        add_node:function(parent_node, nodeid, topic, data, idx, direction, expanded){
+        add_node:function(parent_node, nodeid, topic, data, idx, direction, expanded, editable){
             if(!jm.util.is_node(parent_node)){
                 var the_parent_node = this.get_node(parent_node);
                 if(!the_parent_node){
                     logger.error('the parent_node[id='+parent_node+'] can not be found.');
                     return null;
                 }else{
-                    return this.add_node(the_parent_node, nodeid, topic, data, idx, direction, expanded);
+                    return this.add_node(the_parent_node, nodeid, topic, data, idx, direction, expanded, editable);
                 }
             }
             var nodeindex = idx || -1;
@@ -229,9 +229,17 @@
                 }else{
                     d = (direction != jm.direction.left) ? jm.direction.right : jm.direction.left;
                 }
-                node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,d,expanded);
+                if (typeof(editable) === 'undefined') {
+                    node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,d,expanded, true);
+                } else {
+                    node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,d,expanded, editable);
+                }
             }else{
-                node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,parent_node.direction,expanded);
+                if (typeof(editable) === 'undefined') {
+                    node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,parent_node.direction,expanded, true);
+                } else {
+                    node = new jm.node(nodeid,nodeindex,topic,data,false,parent_node,parent_node.direction,expanded, editable);
+                }
             }
             if(this._put_node(node)){
                 parent_node.children.push(node);
@@ -317,6 +325,7 @@
                     logger.error('the node[id='+node+'] can not be found.');
                     return null;
                 }else if(!the_node.editable) {
+                    console.log('jm mind move_node error');
                     return;
                 }else {
                     return this.move_node(the_node, beforeid, parentid, direction);
@@ -395,6 +404,9 @@
                 var the_node = this.get_node(node);
                 if(!the_node){
                     logger.error('the node[id='+node+'] can not be found.');
+                    return false;
+                }else if(!the_node.editable){
+                    console.log('remove node error');
                     return false;
                 }else{
                     return this.remove_node(the_node);
@@ -523,7 +535,7 @@
                 if(node_parent.isroot){
                     d = node_json.direction == 'left'?jm.direction.left:jm.direction.right;
                 }
-                var node = mind.add_node(node_parent, node_json.id, node_json.topic, data, null, d, node_json.expanded);
+                var node = mind.add_node(node_parent, node_json.id, node_json.topic, data, null, d, node_json.expanded, node_json.editable);
                 if('children' in node_json){
                     var children = node_json.children;
                     for(var i=0;i<children.length;i++){
@@ -538,7 +550,8 @@
                 var o = {
                     id : node.id,
                     topic : node.topic,
-                    expanded : node.expanded
+                    expanded : node.expanded,
+                    editable : node.editable
                 };
                 if(!!node.parent && node.parent.isroot){
                     o.direction = node.direction == jm.direction.left?'left':'right';
@@ -640,7 +653,7 @@
                         if(!!node_direction){
                             d = node_direction == 'left'?jm.direction.left:jm.direction.right;
                         }
-                        mind.add_node(parentid, node_json.id, node_json.topic, data, null, d, node_json.expanded);
+                        mind.add_node(parentid, node_json.id, node_json.topic, data, null, d, node_json.expanded, node_json.editable);
                         node_array.splice(i,1);
                         extract_count ++;
                         var sub_extract_count = df._extract_subnode(mind, node_json.id, node_array);
@@ -676,7 +689,8 @@
                 var o = {
                     id : node.id,
                     topic : node.topic,
-                    expanded : node.expanded
+                    expanded : node.expanded,
+                    editable : node.editable
                 };
                 if(!!node.parent){
                     o.parentid = node.parent.id;
@@ -801,6 +815,7 @@
                 var node_expanded = ('expanded' in node_data)?(node_data.expanded == 'true') : true;
                 delete node_data.expanded;
 
+                var node_editable = ('editable' in node_data)?(node_data.editable == 'true') : true;
                 var node_position = xml_node.getAttribute('POSITION');
                 var node_direction = null;
                 if(!!node_position){
@@ -808,7 +823,7 @@
                 }
                 //logger.debug(node_position +':'+ node_direction);
                 if(!!parent_id){
-                    mind.add_node(parent_id, node_id, node_topic, node_data, null, node_direction, node_expanded);
+                    mind.add_node(parent_id, node_id, node_topic, node_data, null, node_direction, node_expanded, node_editable);
                 }else{
                     mind.set_root(node_id, node_topic, node_data);
                 }
@@ -1191,14 +1206,18 @@
                 if(!the_node){
                     logger.error('the node[id='+node+'] can not be found.');
                     return false;
+                } else if(!the_node.editable){
+                    console.log('begin_edit error');
+                    return false;
                 }else{
                     return this.begin_edit(the_node);
                 }
             }
-            if(this.get_editable()){
+            if(this.get_editable() && node.editable){
                 this.view.edit_node_begin(node);
             }else{
                 logger.error('fail, this mind map is not editable.');
+                console.log('begin_edit error');
                 return;
             }
         },
@@ -1330,6 +1349,10 @@
 
         add_node:function(parent_node, nodeid, topic, data){
             if(this.get_editable()){
+                // if(!this.get_node(nodeid).editable) {
+                //     console.log('jm add_node error');
+                //     return;
+                // }
                 var node = this.mind.add_node(parent_node, nodeid, topic, data);
                 if(!!node){
                     this.view.add_node(node);
@@ -1386,6 +1409,9 @@
                 if(!the_node){
                     logger.error('the node[id='+node+'] can not be found.');
                     return false;
+                }else if (!the_node.editable){
+                    console.log('jm remove_node error');
+                    return false;
                 }else{
                     return this.remove_node(the_node);
                 }
@@ -1396,6 +1422,7 @@
                     return false;
                 }
                 if(!node.editable){
+                    console.log('jm remove_node error');
                     return false;
                 }
                 var nodeid = node.id;
@@ -1422,6 +1449,10 @@
                     return;
                 }
                 var node = this.get_node(nodeid);
+                if (!node.editable) {
+                    console.log('update_node error');
+                    return;
+                }
                 if(!!node){
                     if(node.topic === topic){
                         logger.info('nothing changed');
@@ -1450,6 +1481,7 @@
                     this.invoke_event_handle(jm.event_type.edit,{evt:'move_node',data:[nodeid,beforeid,parentid,direction],node:nodeid});
                 }
             }else{
+                console.log('move_node error');
                 logger.error('fail, this mind map is not editable');
                 return;
             }

@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -10,14 +11,18 @@
 </head>
 
 <body>
-    
-    <ul>
-        <li ontouchmove="touching(event)" ontouchend="move(event)">aaa</li>
-        <li ontouchmove="touching(event)" ontouchend="move(event)">bbb</li>
-        <li ontouchmove="touching(event)" ontouchend="move(event)">ccc</li>
-        <li ontouchmove="touching(event)" ontouchend="move(event)">ddd</li>
-        <li ontouchmove="touching(event)" ontouchend="move(event)">eee</li>
-    </ul>
+
+    <div class="nodes">
+        <button class="btn btn-default" ontouchmove="touching(event)" ontouchend="move(event)">aaa</button>
+        <button class="btn btn-default" ontouchmove="touching(event)" ontouchend="move(event)">bbb</button>
+        <button class="btn btn-default" ontouchmove="touching(event)" ontouchend="move(event)">ccc</button>
+        <button class="btn btn-default" ontouchmove="touching(event)" ontouchend="move(event)">ddd</button>
+        <div class="buttons" style="position:absolute;right: 10px;top: -10px">
+            <button class="btn btn-default showdata">显示数据</button>
+            <button class="btn btn-default undo">撤销</button>
+            <button class="btn btn-default reset">重置</button>
+        </div>
+    </div>
     <div id="jsmind_container"></div>
     <script src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/jsmind.js"></script>
@@ -40,13 +45,15 @@
                     "id": "sub1",
                     "parentid": "root",
                     "topic": "sub1",
-                    "background-color": "#0000ff"
+                    "background-color": "#0000ff",
+                    "editable": false
                 },
                 {
                     "id": "sub2",
                     "parentid": "sub1",
                     "topic": "sub2",
-                    "background-color": "#0000ff"
+                    "background-color": "#0000ff",
+                    "editable": false
                 }
             ]
         };
@@ -56,20 +63,20 @@
             theme: 'primary'
         }
         var jm = jsMind.show(options, mind);
-        // jm.set_readonly(true);
-        // var mind_data = jm.get_data();
-        // alert(mind_data);
-        // jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
-        // jm.set_node_color('sub21', 'green', '#ccc');
 
-        function add_node(name) {
-            var _node = jm.get_root();
-            var node = jm.add_node(_node, name, name);
-            return node;
+        function addNode(name, e) {
+            var _node = jm.get_selected_node();
+            if (!_node) {
+                _node = jm.get_root();
+            }
+            if (jm.add_node(_node, name, name)) {
+                $(e.target).remove()
+            } else {
+                alert('节点已存在')
+            }
         }
 
         function touching(e) {
-            // console.log(ev);
             e.preventDefault();
         }
 
@@ -84,14 +91,15 @@
             var divx2 = jsmind_area.offsetLeft + jsmind_area.offsetWidth;
             var divy2 = jsmind_area.offsetTop + jsmind_area.offsetHeight;
             if (divx1 < x && x < divx2 && divy1 < y && y < divy2) {
-                add_node(e.target.innerHTML);
+                addNode(e.target.innerHTML, e);
             }
         }
-
-        function end(e) {
-            // console.log(e.changedTouches[0].clientX);
-            // console.log(e.changedTouches[0].clientY);
-        }
+        $(document.body).on('click', '.reset', function() {
+            location.reload();
+        })
+        $(document.body).on('click', '.showdata', function() {
+            console.log(jm.get_data('node_array'))
+        })
     </script>
 </body>
 

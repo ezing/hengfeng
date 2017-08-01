@@ -1,7 +1,7 @@
 /*
  * Released under BSD License
  * Copyright (c) 2014-2015 hizzgdev@163.com
- * 
+ *
  * Project Home:
  *   https://github.com/hizzgdev/jsmind/
  */
@@ -229,10 +229,12 @@
 
             var jview = this.jm.view;
             var el = e.target || event.srcElement;
+            // if(!el.editable){return;}
             if(el.tagName.toLowerCase() != 'jmnode'){return;}
             var nodeid = jview.get_binded_nodeid(el);
             if(!!nodeid){
                 var node = this.jm.get_node(nodeid);
+                if(!node.editable){return;}
                 if(!node.isroot){
                     this.reset_shadow(el);
                     this.active_node = node;

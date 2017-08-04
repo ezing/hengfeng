@@ -4,7 +4,7 @@
 
 .nodes {
     margin-top: 10px;
-    display: inline-block;
+    /*display: inline-block;*/
     /*overflow: hidden;*/
 }
 
@@ -22,7 +22,50 @@
     border-color: #285e8e;
 }
 
-.node:after {
+.jsmind-editor {
+    background: #3276b1
+}
+
+/*popover*/
+jmnode {
+    overflow: visible;
+    padding: 15px;
+}
+
+.popover, .popover > .popover-title {
+    background: #3276b1;
+}
+
+.popover.right>.arrow:after {
+    border-right-color: #3276b1;
+}
+
+.extras {
+    position: absolute;
+    right: 0;
+    top: 1px;
+}
+
+.extras:focus {
+    outline: none;
+}
+
+.extras-container {
+    padding: 0;
+    overflow: hidden;
+}
+
+.extras-container > li {
+    list-style: none;
+    white-space: nowrap;
+}
+
+.extras-container > li > a {
+    color: white;
+    text-overflow: ellipsis;
+    margin-left: 10px
+}
+/*.node:after {
     content: 'x';
     right: -6px;
     font-size: 20px;
@@ -31,11 +74,16 @@
     font-weight: bold;
     position: absolute;
     width: 14px;
+}*/
+
+.mobile-nodes {
+    margin-top: 10px;
+    overflow: hidden;
 }
 
-.child-nodes {
-    margin-top: 10px;
-    display: none;
+.mobile-buttons {
+    display: inline-block;
+    float: right;
 }
 
 #jsmind_container {

@@ -31,6 +31,40 @@
 
     </div>
     <script src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function bindExtrasEvent(el) {
+            el.popover({
+                html: true,
+                content: function(){
+                    var str = '', extras = $(this).data('extras');
+                    if (!!extras.img) {
+                        str += '<li><i class="fa fa-image"></i><a href="'+ extras.img +'" target="_blank">'+ extras.img + '</a></li>'
+                    }
+                    if (!!extras.doc) {
+                        str += '<li><i class="fa fa-file-word-o"></i><a href="'+ extras.doc +'" target="_blank">'+ extras.doc + '</a></li>'
+                    }
+                    if (!!extras.ppt) {
+                        str += '<li><i class="fa fa-file-powerpoint-o"></i><a href="'+ extras.ppt +'" target="_blank">'+ extras.ppt + '</a></li>'
+                    }
+                    if (!!extras.pdf) {
+                        str += '<li><i class="fa fa-file-pdf-o"></i><a href="'+ extras.pdf +'" target="_blank">'+ extras.pdf + '</a></li>'
+                    }
+                    if (!!extras.excel) {
+                        str += '<li><i class="fa fa-file-excel-o"></i><a href="'+ extras.excel +'" target="_blank">'+ extras.excel + '</a></li>'
+                    }
+                    if (!!extras.sound) {
+                        str += '<li><i class="fa fa-file-sound-o"></i><a href="'+ extras.sound +'" target="_blank">'+ extras.sound + '</a></li>'
+                    }
+                    if (!!extras.video) {
+                        str += '<li><i class="fa fa-file-video-o"></i><a href="'+ extras.video +'" target="_blank">'+ extras.video + '</a></li>'
+                    }
+                    return '<ul class="extras-container">' + str + '</ul>'
+                },
+                placement: 'right'
+            })
+        }
+    </script>
     <script type="text/javascript" src="./js/jsmind.js"></script>
     <script type="text/javascript" src="./js/jsmind.draggable.js"></script>
     <script type="text/javascript" src="./js/jquery.contextMenu.min.js"></script>

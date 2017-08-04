@@ -24,7 +24,12 @@ var mind = {
         {
             "id": "sub11",
             "parentid": "sub1",
-            "topic": "sub11"
+            "topic": "sub11",
+            "data" : {
+                "img": "http://images2015.cnblogs.com/blog/894693/201608/894693-20160809174336606-1983374129.png",
+                "ppt": "http://aaa.ppt",
+                "pdf": "http://aaa.pdf"
+            }
         },
         {
             "id": "sub12",
@@ -34,7 +39,10 @@ var mind = {
         {
             "id": "sub13",
             "parentid": "sub1",
-            "topic": "sub13"
+            "topic": "sub13",
+            "data" : {
+                "doc": "http://aaa.doc"
+            }
         },
 
         {
@@ -150,6 +158,12 @@ function addNode(name) {
     }
     jm.add_node(_node, name, name);
 }
+
+function createExtraHtml(el) {
+    console.log(el);
+    // return ''
+}
+
 $(document.body).on('click', '.add-node', function(e) {
     $('.nodes > button').removeClass('node');
     var node_name = prompt('请输入节点名');
@@ -173,7 +187,7 @@ $.contextMenu({
     selector: 'jmnode',
     callback: function(key, options) {
         var m = "clicked: " + key;
-        window.console && console.log(m) || alert(m);
+        alert(m);
     },
     items: {
         "upload": {
@@ -183,6 +197,8 @@ $.contextMenu({
 
     }
 });
+
+bindExtrasEvent($('.extras'));
 //使用背景按钮删除
 // $(document.body).on('click', '.del-node', function() {
 //     $('.nodes > button').toggleClass('node');

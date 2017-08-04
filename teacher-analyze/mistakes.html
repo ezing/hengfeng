@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>错题本</title>
@@ -9,89 +10,149 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 left-panel">
-            <h3>知识点学习情况</h3>
-            <div id="points" style="width: 100%;height: 500px"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>整体学习情况</h3>
-            <div id="global" style="width: 100%;height: 500px"></div>
-        </div>
+    <div class="container">
+        <h3>知识点出错情况</h3>
+        <div id="points" style="width: 100%;height: 500px"></div>
+        <h3>错题复习情况</h3>
+        <div id="global" style="width: 100%;height: 500px"></div>
     </div>
-</div>
-<script>
-var pointsChart = echarts.init(document.getElementById('points'));
-
-var option1 = {
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-    },
-    series : [
-        {
-            name: '访问来源',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <script>
+        function setChart(chart, ytitle) {
+            var arr = [];
+            for (var i = 0; i < 45; i++) {
+                arr.push(Math.floor(Math.random() * 20))
             }
+            var option = {
+                xAxis: {
+                    data: [
+                        // '知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1',
+                        // '知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1',
+                        // '知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1',
+                        // '知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1',
+                        // '知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1','知识点1'
+                    ],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#cccccc'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666666',
+                            fontWeight: '400'
+                        },
+                        interval: 0,
+                        rotate: -30
+                    }
+                },
+                yAxis: {
+                    name: ytitle,
+                    max: 20,
+                    nameTextStyle: {
+                        color: '#999999',
+                        fontSize: 12,
+                        // fontFamily: 'NotoSansHans-Light'
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#cccccc'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666666',
+                            fontWeight: '400'
+                        }
+                    }
+                },
+
+                series: [{
+                    type: 'bar',
+                    data: arr,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = [
+                                    '#00bda5', '#19c3ae', '#33cab7', '#4cd1c0', '#66d7c9', '#7fded2', '#99e5db', '#b2ebe4', '#ccf2ed',
+                                    "#ff7061", "#ff7e70", "#ff8d81", "#ff9b90", "#ffa9a0", "#ffb7b0", "#ffc6c0", "#ffd4cf", "#ffe2df", "#fff0ef",
+                                    "#00bd1f", "#19c335", "#33ca4c", "#4cd162", "#66d779", "#7fde8f", "#99e5a5", "#b2ebbb", "#ccf2d2", "#e5f8e8",
+                                    "#ffdd00", "#ffe019", "#ffe433", "#ffe74c", "#ffeb66", "#fff199", "#fff5b2", "#fff8cc", "#fffce5",
+                                    "#8c8ee6", "#9799e8", "#a3a5eb", "#babbf0", "#c5c6f2", "#d1d2f5", "#dcddf7", "#e8e8fa", "#f3f3fc"
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                            // opacity: 0.5,
+                            label: {
+                                show: true,
+                                textStyle: {
+                                    color: '#999999',
+                                    fontSize: '10px'
+                                },
+                                position: 'top'
+                            }
+                        }
+                    },
+                    barWidth: 20
+                }]
+            }
+            chart.setOption(option);
         }
-    ]
-};
-pointsChart.setOption(option1);
 
-var globalChart = echarts.init(document.getElementById('global'));
+        var pointsChart = echarts.init(document.getElementById('points'));
+        var globalChart = echarts.init(document.getElementById('global'));
+        setChart(pointsChart, '错题数');
+        setChart(globalChart, '复习数');
 
-var option2 = {
- legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
-    },
-    radar: {
-        // shape: 'circle',
-        indicator: [
-           { name: '预习速度', max: 6500},
-           { name: '预习效率', max: 16000},
-           { name: '复习效率', max: 30000},
-           { name: '课堂小测速度', max: 38000},
-           { name: '复习速度', max: 52000},
-           { name: '课堂小测效率', max: 25000}
-       ],
-       radius: '55%'
-    },
-    series: [{
-        name: '整体学习情况',
-        type: 'radar',
-        // areaStyle: {normal: {}},
-        data : [
-            {
-                value : [4300, 10000, 28000, 35000, 50000, 19000],
-                name : '预算分配（Allocated Budget）'
+
+        var userId = getParam('userID');
+        var subjectId = getParam('subjectID');
+        var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentExercisesErrorAndReviewKnowledgeAndCount';
+        // var url = 'http://192.168.1.184/maplocal.xml';
+        var defaultParam = {
+            userID: userId,
+            subjectID: subjectId,
+        }
+        $.ajax({
+            url: url,
+            data: defaultParam,
+            type: 'GET',
+            success: function(data) {
+                var data = JSON.parse($(data).text());
+                var list = data.listData || [];
+                var know_arr = [],
+                    review_arr = [],
+                    error_arr = [];
+                list.forEach(function(obj) {
+                    know_arr.push(obj['KnowPointName']);
+                    error_arr.push(obj['ErrorQuestionCount']);
+                    review_arr.push(obj['QuestionReviewCount']);
+                });
+
+                pointsChart.setOption({
+                    xAxis: {
+                        data: know_arr
+                    },
+                    series: [{
+                        data: error_arr
+                    }]
+                });
+
+                globalChart.setOption({
+                    xAxis: {
+                        data: know_arr
+                    },
+                    series: [{
+                        data: review_arr
+                    }]
+                });
             },
-             {
-                value : [5000, 14000, 28000, 31000, 42000, 21000],
-                name : '实际开销（Actual Spending）'
+            error: function(e) {
+                alert('出错啦');
             }
-        ]
-    }]
-};
-globalChart.setOption(option2);
-</script>
+        });
+    </script>
 </body>
+
 </html>

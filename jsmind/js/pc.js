@@ -71,7 +71,6 @@ var mind = {
 var jm = jsMind.show(options, mind),
     root = jm.get_root();
 // var list = [root];
-
 function allowDrop(e) {
     e.preventDefault();
 }
@@ -183,20 +182,28 @@ $(document.body).on('click', '.del-node', function(e) {
     }
 })
 
-$.contextMenu({
-    selector: 'jmnode',
-    callback: function(key, options) {
-        var m = "clicked: " + key;
-        alert(m);
-    },
-    items: {
-        "upload": {
-            name: "上传文件",
-            icon: "fa-image"
-        },
-
+$(document.body).on('click', '.upload-btn', function(e) {
+    var _node = jm.get_selected_node();
+    if (!_node) {
+        alert('请选择一个节点')
+    } else {
+        // jm.remove_node(_node);
     }
-});
+})
+// $.contextMenu({
+//     selector: 'jmnode',
+//     callback: function(key, options) {
+//         var m = "clicked: " + key;
+//         alert(m);
+//     },
+//     items: {
+//         "upload": {
+//             name: "上传文件",
+//             icon: "fa-image"
+//         },
+//
+//     }
+// });
 
 bindExtrasEvent($('.extras'));
 //使用背景按钮删除

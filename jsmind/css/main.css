@@ -2,6 +2,10 @@
     margin-top: 20px;
 }
 
+.upload-btn {
+    float: right;
+}
+
 .nodes {
     margin-top: 10px;
     /*display: inline-block;*/

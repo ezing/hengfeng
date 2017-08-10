@@ -2569,6 +2569,18 @@
             }
             view_data.width = element.clientWidth;
             view_data.height = element.clientHeight;
+            if (node.data.data != null) {
+                var el = $c('i');
+                el.className = 'fa fa-file-text extras';
+                el.setAttribute('data-toggle', 'popover');
+                el.setAttribute('data-trigger', 'focus');
+                el.setAttribute('role', 'button');
+                el.setAttribute('tabindex', '0');
+                el.setAttribute('title', '附件');
+                el.setAttribute('data-extras', JSON.stringify(node.data.data));
+                element.appendChild(el);
+                bindExtrasEvent($(el));
+            }
         },
 
         select_node: function(node) {

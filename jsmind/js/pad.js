@@ -104,6 +104,16 @@ function drop(e) {
 $(document.body).on('click', '.reset', function() {
     location.reload();
 })
+
+$(document.body).on('click', '.upload-btn', function(e) {
+    var _node = jm.get_selected_node();
+    if (!_node) {
+        alert('请选择一个节点')
+    } else {
+        // jm.remove_node(_node);
+    }
+})
+
 $(document.body).on('click', '.showdata', function() {
     console.log(jm.get_data('node_array'))
 })

@@ -50,7 +50,10 @@
                             fontWeight: '400'
                         },
                         interval: 0,
-                        rotate: -45
+                        rotate: -15,
+                        formatter: function(params) {
+                            return formateXAxis(params)
+                        }
                     }
                 },
                 yAxis: {

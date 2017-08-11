@@ -8,10 +8,14 @@
     color: #00bda5;
 }
 
-.btn-detail, .btn-back {
+.btn-detail, .btn-control, .btn-back {
     float: right;
     color: #666666;
     font-size: 14px;
+}
+
+.btn-control {
+    margin-right: 10px;
 }
 
 /*mistakes*/

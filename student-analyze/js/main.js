@@ -246,6 +246,7 @@ $.ajax({
 })
 
 $(document.body).on('click', '.class-detail', function() {
+    console.log(userId);
     location.href = './class-detail.html?userID=' + userId;
 })
 

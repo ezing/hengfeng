@@ -4,31 +4,30 @@ var config = {
         '    <div class="thumb-container">',
         '        <a href="#" class="video-href" data-url="%(SPUrl_str)" data-title="%(SPMC)"></a>',
         '        <i class="bg"></i>',
-        '        <img src="%(SLTUrl)" alt="" style="height:135px">',
+        '        <img src="%(SLTUrl)" alt="">',
         '        <span class="video-time">%(ShiChang)</span>',
         '    </div>',
-        '    <h5 class="weike-title">%(SPMC)</h5>',
+        '    <h4 class="weike-title" style="margin-left:10px">%(SPMC)</h4>',
         '</div>'
     ].join(''),
-    url: 'http://w21.pdoca.com/WEBservice/HuDongKeTang/Before_In_AfterClass.asmx/GetWeiKeList'
+    // url: 'http://w21.pdoca.com/WEBservice/HuDongKeTang/Before_In_AfterClass.asmx/GetWeiKeList'
 };
 
 var defaultParam = {
     subjectID: '',
-    gradeID: 1,
+    // gradeID: 1,
     pageIndex: 1,
     pageSize: 15,
     searchText: ''
 }
 
-// defaultParam.gradeID = window.external.getGradeID()
-
-var paramCache = null;
+defaultParam.gradeID = window.external.getGradeID();
+var paramCache = null, _url = decodeURI(M.util.getParam('urlName'));
 
 function getWeikeList(param, cb) {
     paramCache = param;
     $.ajax({
-        url: config.url,
+        url: _url,
         data: paramCache,
         type: 'POST',
         success: function(data) {
@@ -38,7 +37,7 @@ function getWeikeList(param, cb) {
             }
         },
         error: function(e) {
-            alert('出错啦');
+            alert('网络错误');
         }
     });
 }
@@ -51,6 +50,7 @@ function renderWeikeList(data) {
         item.SPUrl_str = item.SPUrl.replace(/flv/, 'mp4');
         html.push(config.weike_item.jstpl_format(item));
     });
+    // $('.thumb-container img').css('height', 'auto');
     $('.video-container').html(html.join(''));
     var pageTotal = Math.ceil(data.Total / defaultParam.pageSize), pageIndex = data.pageIndex;
     if (pageTotal === 1) {
@@ -113,6 +113,10 @@ $(document.body).on('click', '.back_btn', function() {
     getWeikeList(paramCache, changeArrow(pageIndex));
 });
 
+$(document.body).on('focus', '#search', function() {
+    window.external.OpenKeyBoard('search');
+});
+
 $(document.body).on('click', '.go-search', function() {
     // var subjectID = $('.subject-slt').attr('data-sid') || '';
     // var _param = defaultParam;
@@ -131,17 +135,31 @@ $(document.body).on('click', '.video-href', function(e) {
     $('.modal').modal('toggle');
     //fix modal size
     player.on('loadeddata', function() {
+        var screen_width = screen.width;
         var currentWidth = $('#modal-video').width();
-        if (630 <= currentWidth) {
-            $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
-            if (currentWidth > 820) {
-                $('.modal-video-dimensions').css({
-                    'width': '820px',
-                    'height': '462px'
-                })
+        var $video_container = $('.modal-video-dimensions');
+        if (screen_width < 1800) {
+            if (630 <= currentWidth) {
+                $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
+                if (currentWidth > 820) {
+                    $video_container.css({
+                        'width': '820px',
+                        'height': '462px'
+                        // 'width': 1.5*currentWidth,
+                        // 'height': 1.5*($('#modal-video').height())
+                    })
+                }
+            } else {
+                $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
             }
         } else {
-            $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
+            // if (currentWidth > 630) {
+                $('.modal-dialog').removeClass('modal-lg modal-md').addClass('modal-xl')
+                $video_container.css({
+                    'width': '1000px',
+                    'height': '560px'
+                })
+            // }
         }
     })
 })

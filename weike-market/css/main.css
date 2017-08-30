@@ -1,27 +1,77 @@
-@media screen and (max-width : 2048px) {
-    .video-container {
-        width: 95%;
+@media screen and (max-width: 1800px) {
+    .thumb-container img {
+        height: 135px;
     }
-    .weike-item {
-        width: 18%;
+    .pagenum {
+        width: 180px;
+    }
+    .search-input {
+        width: 330px;
+    }
+    .subjects ul {
+        top: -203px;
+    }
+    .subjects ul li {
+        height: 50px;
+        line-height: 50px;
     }
 }
+
+
+/*@media screen and (min-width: 1800px) and (max-width: 2200px) {*/
+
+@media screen and (min-width: 1800px) {
+    .thumb-container img {
+        height: 200px;
+    }
+    .pagenum {
+        width: 250px;
+    }
+    .search-input {
+        height: 50px;
+        width: 600px;
+    }
+    .go-search {
+        /*font-size: 20px;*/
+        height: 50px;
+    }
+    .modal-xl {
+        width: 1500px;
+    }
+    .subjects ul {
+        top: -282px;
+    }
+    .subjects ul li {
+        height: 70px;
+        line-height: 70px;
+        font-size: 18px;
+    }
+}
+
 
 /*@media screen and (max-width : 2048px) {
 
 }*/
 
 .video-container {
+    width: 100%;
     margin: 0 auto;
-    padding: 5px 40px;
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-bottom: 6.5%;
+    /*padding-bottom: 40px;*/
+    /*padding-left: 30px;*/
+    /*padding: 5px 40px;*/
     /*width: 1280px;*/
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .weike-item {
     /*width: 220px;*/
+    width: 18%;
     float: left;
-    margin: 10px;
+    margin-right: 2%;
+    margin-bottom: 1.5%;
     border-radius: 5px;
     box-shadow: 0 2px 10px #ccc;
 }
@@ -55,7 +105,6 @@
 }
 
 .thumb-container img {
-    /*width: 220px;*/
     width: 100%;
 }
 
@@ -70,7 +119,7 @@
     font-size: 0.1em;
 }
 
-.weike-item h5 {
+.weike-item h4 {
     margin-left: 10px;
     text-decoration: none;
     text-overflow: ellipsis;
@@ -81,7 +130,8 @@
 .search-bar {
     position: fixed;
     bottom: 0;
-    height: 80px;
+    height: 6em;
+    /*height: 11%;*/
     background-color: white;
     width: 100%;
     border-top: 1px solid #ccc;
@@ -89,7 +139,8 @@
 }
 
 .subjects {
-    width: 120px;
+    /*width: 120px;*/
+    width: 8%;
     display: inline-block;
     /*margin-left: 55px;*/
     vertical-align: middle;
@@ -102,7 +153,6 @@
 
 .subjects ul {
     position: absolute;
-    top: -200px;
     width: 100%;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
@@ -113,20 +163,23 @@
 
 .subjects ul li {
     border-top: 1px solid #ccc;
-    height: 50px;
     text-align: center;
-    line-height: 50px;
     z-index: 500;
+    font-size: 1.3em;
+}
+
+.subject-slt {
+    font-size: 1.3em;
 }
 
 .pagenum {
-    margin: 20px 40px;
     display: inline-block;
     border-radius: 20px;
     border: 1px solid #ccc;
     position: relative;
     padding: 10px;
-    width: 180px;
+    /*width: 13%;*/
+    font-size: 1.5em;
     text-align: center;
     vertical-align: middle;
 }
@@ -169,7 +222,8 @@
 
 .search {
     padding-left: 40px;
-    padding-top: 17px;
+    padding-top: 1.5%;
+    /*padding-top: 17px;*/
     position: relative;
     height: 100%;
     border-right: 10px solid #00bda5;
@@ -180,6 +234,7 @@
     color: #fff;
     background-color: #00bda5;
     border-color: #00bda5;
+    font-size: 1.5em;
 }
 
 .return-btn {

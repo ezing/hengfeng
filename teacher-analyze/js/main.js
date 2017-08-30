@@ -1,4 +1,5 @@
-var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/teacherinfo.asmx/";
+// var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/teacherinfo.asmx/";
+var urlPre = decodeURI(getParam('urlName'));
 var list_item = [
     '<tr>',
     '    <td>%(Sort_Id)</td>',
@@ -33,6 +34,7 @@ var option1 = {
         axisLabel: {
             textStyle: {
                 color: '#666666',
+                fontSize: 16,
                 fontWeight: '400'
             }
         }
@@ -42,7 +44,7 @@ var option1 = {
         max: 100,
         nameTextStyle: {
             color: '#999999',
-            fontSize: 12,
+            fontSize: 16,
             // fontFamily: 'NotoSansHans-Light'
         },
         axisLine: {
@@ -53,7 +55,8 @@ var option1 = {
         axisLabel: {
             textStyle: {
                 color: '#666666',
-                fontWeight: '400'
+                fontWeight: '400',
+                fontSize: 16
             }
         }
     },
@@ -75,7 +78,7 @@ var option1 = {
                     show: true,
                     textStyle: {
                         color: '#999999',
-                        fontSize: '10px'
+                        fontSize: '14px'
                     },
                     position: 'top'
                 }
@@ -103,7 +106,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 })
 
@@ -138,7 +141,7 @@ var option2 = {
             showMinLabel: false,
             textStyle: {
                 color: '#cccccc',
-                fontSize: '12px'
+                fontSize: '14px'
             }
         },
         center: ['50%', '50%'],
@@ -167,7 +170,8 @@ var option2 = {
         }]
     }],
     textStyle: {
-        color: '#000'
+        color: '#000',
+        fontSize: 16
     }
 
 };
@@ -193,7 +197,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 })
 
@@ -212,7 +216,7 @@ $.ajax({
         $('.user_list').html(html.join(''));
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 })
 

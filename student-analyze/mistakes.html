@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="contain">
         <h3>知识点出错情况</h3>
         <div id="points" style="width: 100%;height: 500px"></div>
         <h3>错题复习情况</h3>
@@ -104,8 +104,8 @@
 
         var userId = getParam('userID');
         var subjectId = getParam('subjectID');
-        var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentExercisesErrorAndReviewKnowledgeAndCount';
-        // var url = 'http://192.168.1.184/maplocal.xml';
+        // var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentExercisesErrorAndReviewKnowledgeAndCount';
+        var url = decodeURI(getParam('urlName'));
         var defaultParam = {
             userID: userId,
             subjectID: subjectId
@@ -145,7 +145,7 @@
                 });
             },
             error: function(e) {
-                alert('出错啦');
+                alert('网络错误');
             }
         });
     </script>

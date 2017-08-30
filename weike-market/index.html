@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <!-- saved from url=(0014) about:internet  -->
     <meta charset="utf-8">
     <title>微课超市</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +14,10 @@
 </head>
 
 <body>
-    <div class="video-container"></div>
+    <div class="video-container" style="overflow:hidden;"></div>
 
     <div class="search-bar form-inline">
-        <div class="subjects btn" style="padding: 15px 0">
+        <div class="subjects btn" style="padding: 1% 0">
             <ul class="list-unstyled" style="display: none">
                 <li data-type=''>全部</li>
                 <li data-type='1'>语文</li>
@@ -29,7 +30,7 @@
                 <span class="subject-slt">学科</span>
             </div>
         </div>
-        <div style="height: 100%; border-right: 1px solid #ccc; display: inline-block; vertical-align: middle">
+        <div style="height: 100%; border-right: 1px solid #ccc; display: inline-block; vertical-align: middle;padding:1.5%">
             <div class="pagenum">
                 <button class="btn back_btn" disabled="disabled" style="opacity:1"></button>
                 <span class="cur-page"></span>/
@@ -38,7 +39,7 @@
             </div>
         </div>
         <div class="form-group search">
-            <input type="text" class="form-control input-lg search-input" style="width: 330px">
+            <input type="text" class="form-control input-lg search-input"  id="search">
 
             <button type="submit" class="btn btn-lg go-search">搜索</button>
         </div>
@@ -51,10 +52,10 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size: 1.8em">&times;</span></button>
+                    <h3 class="modal-title"></h3>
                 </div>
-                <div class="modal-body" style="padding: 30px">
+                <div class="modal-body" style="padding: 5%">
                     <video class="video-js vjs-default-skin" controls data-setup='{ "html5" : { "nativeControlsForTouch" : true }, "controlBar": { "volumePanel": {"inline": false } } }' id="modal-video" autoplay src="" poster=""></video>
                 </div>
             </div>

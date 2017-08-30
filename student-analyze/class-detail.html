@@ -11,11 +11,19 @@
 </head>
 
 <body>
-    <div class="container">
+
+    <!-- <div class="container"> -->
+    <!-- <div class="contain">
+        <div class="buttons" style="overflow:hidden">
+            <button class="btn btn-default btn-sm btn-back">返回</button>
+            <button class="btn btn-default btn-sm btn-control control-scale">缩放控制</button>
+        </div>
+        <br> -->
+        <div class="contain">
         <span class="subtitle">认真指数</span>
         <button class="btn btn-default btn-sm btn-back">返回</button>
         <button class="btn btn-default btn-sm btn-control control-scale">缩放控制</button>
-        <div id="serious" style="width: 100%;height:400px;margin-bottom: 20px">
+        <div id="serious" style="width: 100%;height:400px;margin-bottom: 20px;">
         </div>
 
         <span class="subtitle">积极指数</span>
@@ -32,6 +40,10 @@
                 grid: {
                     // y2: 110
                     // right: '15%'
+                    left: '10%',
+                    top: 60,
+                    right: '10%',
+                    bottom: 60,
                 },
                 xAxis: {
                     data: [],
@@ -48,7 +60,7 @@
                             fontWeight: '400'
                         },
                         interval: 0,
-                        rotate: -15,
+                        rotate: -25,
                         formatter: function(params) {
                             return formateXAxis(params)
                         }
@@ -144,7 +156,8 @@
         setChart(chart3, '#ffc600');
 
         var userId = getParam('userID');
-        var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentLearningAnalysis_KeTangBiaoXian_Detail';
+        // var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentLearningAnalysis_KeTangBiaoXian_Detail';
+        var url = decodeURI(getParam('urlName'))
         var defaultParam = {
             userID: userId,
             subjectID: '',
@@ -195,7 +208,7 @@
                 });
             },
             error: function(e) {
-                alert('出错啦');
+                alert('网络错误');
             }
         });
 
@@ -203,7 +216,7 @@
             Array.prototype.slice.call(arguments).forEach(function(chart) {
                 chart.setOption({
                     dataZoom: [{
-                        start: 30,
+                        start: 75,
                         show: true
                     }],
                 })

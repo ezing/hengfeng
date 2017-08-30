@@ -111,8 +111,8 @@
 .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
     content: "\f108";
     color: #00bda5;
-    line-height: 1.9em;
-    font-size: 2.7em;
+    font-size: 20px;
+    line-height: 50px;
     /*line-height: 3em;*/
     font-weight: bold;
 

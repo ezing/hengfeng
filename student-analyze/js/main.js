@@ -1,4 +1,5 @@
-var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/";
+// var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/";
+var urlPre = decodeURI(getParam('urlName'));
 var list_item = [
     '<tr>',
     '    <td>%(rownum)</td>',
@@ -11,7 +12,6 @@ var list_item = [
 ].join('');
 
 var userId = getParam('userID'); //学生
-// var userId = 2227;
 var tpId = getParam('tpID'); //课程
 var subjectId = getParam('subjectID'); //学科
 
@@ -138,7 +138,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 });
 
@@ -227,7 +227,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 })
 
@@ -241,12 +241,11 @@ $.ajax({
         $('.user_list').html(list_item.jstpl_format(data));
     },
     error: function(e) {
-        alert('出错啦');
+        alert('网络错误');
     }
 })
 
 $(document.body).on('click', '.class-detail', function() {
-    console.log(userId);
     location.href = './class-detail.html?userID=' + userId;
 })
 

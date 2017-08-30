@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="contain">
         <span class="subtitle">课前预习</span>
         <button class="btn btn-default btn-sm btn-back">返回</button>
         <button class="btn btn-default btn-sm btn-control control-scale">缩放控制</button>
@@ -50,7 +50,7 @@
                             fontWeight: '400'
                         },
                         interval: 0,
-                        rotate: -15,
+                        rotate: -25,
                         formatter: function(params) {
                             return formateXAxis(params)
                         }
@@ -208,7 +208,7 @@
                 });
             },
             error: function(e) {
-                alert('出错啦');
+                alert('网络错误');
             }
         });
 
@@ -216,7 +216,7 @@
             Array.prototype.slice.call(arguments).forEach(function(chart) {
                 chart.setOption({
                     dataZoom: [{
-                        start: 30,
+                        start: 75,
                         show: true
                     }],
                 })

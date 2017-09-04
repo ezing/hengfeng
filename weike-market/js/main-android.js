@@ -24,7 +24,7 @@ var defaultParam = {
 defaultParam.gradeID = M.util.getParam('gradeID');
 
 var paramCache = null,
-    _url = decodeURI(M.util.getParam('urlName'));
+    _url = decodeURIComponent(M.util.getParam('urlName'));
 
 function getWeikeList(param, cb) {
     paramCache = param;

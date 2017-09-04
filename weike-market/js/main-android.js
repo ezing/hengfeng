@@ -21,8 +21,10 @@ var defaultParam = {
     searchText: ''
 }
 
-defaultParam.gradeID = window.external.getGradeID();
-var paramCache = null, _url = decodeURI(M.util.getParam('urlName'));
+defaultParam.gradeID = M.util.getParam('gradeID');
+
+var paramCache = null,
+    _url = decodeURI(M.util.getParam('urlName'));
 
 function getWeikeList(param, cb) {
     paramCache = param;
@@ -52,7 +54,8 @@ function renderWeikeList(data) {
     });
     // $('.thumb-container img').css('height', 'auto');
     $('.video-container').html(html.join(''));
-    var pageTotal = Math.ceil(data.Total / defaultParam.pageSize), pageIndex = data.pageIndex;
+    var pageTotal = Math.ceil(data.Total / defaultParam.pageSize),
+        pageIndex = data.pageIndex;
     if (pageTotal === 1) {
         $('.back_btn').css('background', 'url(./css/img/back.png) no-repeat center').attr('disabled', 'disabled');
         $('.forward_btn').css('background', 'url(./css/img/forward.png) no-repeat center').attr('disabled', 'disabled');
@@ -82,11 +85,6 @@ function changeArrow(pageIndex) {
     } else {
         $('.back_btn').css('background', 'url(./css/img/back1.png) no-repeat center').removeAttr('disabled');
     }
-}
-
-function pauseVideo() {
-    var player = videojs('modal-video');
-    player.pause();
 }
 
 $(document.body).on('click', '.subject-btn', function() {
@@ -153,24 +151,31 @@ $(document.body).on('click', '.video-href', function(e) {
                         // 'width': 1.5*currentWidth,
                         // 'height': 1.5*($('#modal-video').height())
                     })
+                } else if (1000 > screen_width) {
+                    $video_container.css({
+                        'width': '538px',
+                        'height': '303px'
+                    })
                 }
+
             } else {
                 $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
             }
         } else {
             // if (currentWidth > 630) {
-                $('.modal-dialog').removeClass('modal-lg modal-md').addClass('modal-xl')
-                $video_container.css({
-                    'width': '1000px',
-                    'height': '560px'
-                })
+            $('.modal-dialog').removeClass('modal-lg modal-md').addClass('modal-xl')
+            $video_container.css({
+                'width': '1000px',
+                'height': '560px'
+            })
             // }
         }
     })
 })
 
-$('.modal').on('hidden.bs.modal', function (e) {
-  pauseVideo();
+$('.modal').on('hidden.bs.modal', function(e) {
+    var player = videojs('modal-video');
+    player.pause();
 })
 
 $(document).ready(function() {

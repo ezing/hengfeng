@@ -142,7 +142,7 @@ $(document.body).on('click', '.video-href', function(e) {
         var currentWidth = $('#modal-video').width();
         var $video_container = $('.modal-video-dimensions');
         if (screen_width < 1800) {
-            if (630 <= currentWidth) {
+            if (538 <= currentWidth) {
                 $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
                 if (currentWidth > 820) {
                     $video_container.css({

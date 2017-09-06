@@ -33,7 +33,7 @@ function getWeikeList(param, cb) {
         data: paramCache,
         type: 'POST',
         success: function(data) {
-            renderWeikeList($(data).text());
+            renderWeikeList(data);
             if (typeof cb === 'function') {
                 cb();
             }
@@ -45,7 +45,9 @@ function getWeikeList(param, cb) {
 }
 
 function renderWeikeList(data) {
-    var data = JSON.parse(data);
+    if(!isJSON(data)) {
+        data = JSON.parse($(data).text());
+    }
     var list = data.listData || [],
         html = [];
     $(list).each(function(index, item) {

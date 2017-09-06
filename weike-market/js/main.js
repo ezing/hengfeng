@@ -31,19 +31,21 @@ function getWeikeList(param, cb) {
         data: paramCache,
         type: 'POST',
         success: function(data) {
-            renderWeikeList($(data).text());
+            renderWeikeList(data);
             if (typeof cb === 'function') {
                 cb();
             }
         },
         error: function(e) {
-            alert('网络错误');
+            // alert('网络错误');
         }
     });
 }
 
 function renderWeikeList(data) {
-    var data = JSON.parse(data);
+    if(!M.util.isJSON(data)) {
+        data = JSON.parse($(data).text());
+    }
     var list = data.listData || [],
         html = [];
     $(list).each(function(index, item) {
@@ -150,8 +152,6 @@ $(document.body).on('click', '.video-href', function(e) {
                     $video_container.css({
                         'width': '820px',
                         'height': '462px'
-                        // 'width': 1.5*currentWidth,
-                        // 'height': 1.5*($('#modal-video').height())
                     })
                 }
             } else {

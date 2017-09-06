@@ -2,6 +2,7 @@ var config = {
     weike_item: [
         '<div class="weike-item">',
         '    <div class="thumb-container">',
+        // '        <a href="./player.html?title=%(SPMC)&videoUrl=%(SPUrl_str)" class="video-href" data-url="%(SPUrl_str)" data-title="%(SPMC)"></a>',
         '        <a href="#" class="video-href" data-url="%(SPUrl_str)" data-title="%(SPMC)"></a>',
         '        <i class="bg"></i>',
         '        <img src="%(SLTUrl)" alt="">',
@@ -22,7 +23,8 @@ var defaultParam = {
 }
 
 defaultParam.gradeID = window.external.getGradeID();
-var paramCache = null, _url = decodeURIComponent(M.util.getParam('urlName'));
+var paramCache = null,
+    _url = decodeURIComponent(M.util.getParam('urlName'));
 
 function getWeikeList(param, cb) {
     paramCache = param;
@@ -31,21 +33,20 @@ function getWeikeList(param, cb) {
         data: paramCache,
         type: 'POST',
         success: function(data) {
-            renderWeikeList(data);
+            renderWeikeList($(data).text());
             if (typeof cb === 'function') {
                 cb();
             }
         },
         error: function(e) {
+            alert(JSON.stringify(e))
             // alert('网络错误');
         }
     });
 }
 
 function renderWeikeList(data) {
-    if(!M.util.isJSON(data)) {
-        data = JSON.parse($(data).text());
-    }
+    var data = JSON.parse(data);
     var list = data.listData || [],
         html = [];
     $(list).each(function(index, item) {
@@ -53,8 +54,9 @@ function renderWeikeList(data) {
         html.push(config.weike_item.jstpl_format(item));
     });
     // $('.thumb-container img').css('height', 'auto');
-    $('.video-container').html(html.join(''));
-    var pageTotal = Math.ceil(data.Total / defaultParam.pageSize), pageIndex = data.pageIndex;
+    $('.video-container').html(html.join('')).show();
+    var pageTotal = Math.ceil(data.Total / defaultParam.pageSize),
+        pageIndex = data.pageIndex;
     if (pageTotal === 1) {
         $('.back_btn').css('background', 'url(./css/img/back.png) no-repeat center').attr('disabled', 'disabled');
         $('.forward_btn').css('background', 'url(./css/img/forward.png) no-repeat center').attr('disabled', 'disabled');
@@ -84,11 +86,6 @@ function changeArrow(pageIndex) {
     } else {
         $('.back_btn').css('background', 'url(./css/img/back1.png) no-repeat center').removeAttr('disabled');
     }
-}
-
-function pauseVideo() {
-    var player = videojs('modal-video');
-    player.pause();
 }
 
 $(document.body).on('click', '.subject-btn', function() {
@@ -134,44 +131,79 @@ $(document.body).on('click', '.go-search', function() {
     getWeikeList(paramCache);
 })
 
-$(document.body).on('click', '.video-href', function(e) {
-    var $e = $(e.target);
-    $('.modal-title').html($e.data('title'));
-    var player = videojs('modal-video');
-    player.src($e.data('url'));
-    $('.modal').modal('toggle');
-    //fix modal size
-    player.on('loadeddata', function() {
-        var screen_width = screen.width;
-        var currentWidth = $('#modal-video').width();
-        var $video_container = $('.modal-video-dimensions');
-        if (screen_width < 1800) {
-            if (630 <= currentWidth) {
-                $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
-                if (currentWidth > 820) {
-                    $video_container.css({
-                        'width': '820px',
-                        'height': '462px'
-                    })
-                }
-            } else {
-                $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
-            }
-        } else {
-            // if (currentWidth > 630) {
-                $('.modal-dialog').removeClass('modal-lg modal-md').addClass('modal-xl')
-                $video_container.css({
-                    'width': '1000px',
-                    'height': '560px'
-                })
-            // }
-        }
-    })
+$(document.body).on('click', '.go-back', function(){
+    $('.video-play-panel').hide();
+    getWeikeList(defaultParam);
 })
 
-$('.modal').on('hidden.bs.modal', function (e) {
-  pauseVideo();
+$(document.body).on('click', '.video-href', function(e) {
+    var $e = $(e.target);
+    $('.video-container').hide();
+    $('#title').html($e.data('title'));
+    jwplayer('loading').setup({
+        autostart: true,
+        screencolor: '0x000000',
+        flashplayer: './js/player.swf',
+        file: $e.data('url'),
+        height: 800
+    });
+    $('.video-play-panel').show();
+    // try {
+    //     window.location.href = './player.html?title='+ encodeURIComponent($e.data('title')) +'&videoUrl=' + $e.data('url');
+    // } catch (e) {
+    //     alert(JSON.stringify(e))
+    // } finally {
+    //
+    // }
+    // var str = '<video class="video-js vjs-default-skin" controls data-setup="{ html5 : { nativeControlsForTouch : true }, controlBar: { volumePanel: {inline: false } } }" id="modal-video" autoplay src="' + $e.data('url') + '" poster=""></video>';
+    // bootbox.dialog({
+    //     title: $e.data('title'),
+    //     message: str,
+    // });
+    // $('.modal-title').html($e.data('title'));
+    // var player = videojs('modal-video');
+    // player.src($e.data('url'));
+    // $('.modal').modal('toggle');
+    // //fix modal size
+    // player.on('loadeddata', function() {
+    //     var screen_width = screen.width;
+    //     var currentWidth = $('#modal-video').width();
+    //     var $video_container = $('.modal-video-dimensions');
+    //     if (screen_width < 1800) {
+    //         if (630 <= currentWidth) {
+    //             $('.modal-dialog').removeClass('modal-md').addClass('modal-lg');
+    //             if (currentWidth > 820) {
+    //                 $video_container.css({
+    //                     'width': '820px',
+    //                     'height': '462px'
+    //                     // 'width': 1.5*currentWidth,
+    //                     // 'height': 1.5*($('#modal-video').height())
+    //                 })
+    //             }
+    //         } else {
+    //             $('.modal-dialog').removeClass('modal-lg').addClass('modal-md')
+    //         }
+    //     } else {
+    //         // if (currentWidth > 630) {
+    //             $('.modal-dialog').removeClass('modal-lg modal-md').addClass('modal-xl')
+    //             $video_container.css({
+    //                 'width': '1000px',
+    //                 'height': '560px'
+    //             })
+    //         // }
+    //     }
+    // })
 })
+
+function pauseVideo() {
+    // var player = videojs('modal-video');
+    // player.pause();
+    jwplayer('loading').pause(true)
+}
+
+// $('.modal').on('hidden.bs.modal', function(e) {
+//     pauseVideo();
+// })
 
 $(document).ready(function() {
     getWeikeList(defaultParam);

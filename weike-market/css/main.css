@@ -245,3 +245,29 @@
     vertical-align: middle;
     text-align: center;
 }
+
+.video-play-panel {
+    width: 100%;
+    padding-top: 4%;
+    display: none;
+}
+
+.video-play {
+    width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#title {
+    float: left;
+    font-size: 1.8em;
+}
+
+.go-back {
+    float: right;
+}
+
+#loading {
+    width: 800px;
+    margin: 20px auto 0;
+}

@@ -21,6 +21,7 @@
     }
     #loading {
         width: 800px;
+        margin: 10px auto 0;
     }
 }
 
@@ -58,6 +59,7 @@
     }
     #loading {
         width: 800px;
+        margin: 50px auto 0;
     }
 }
 
@@ -267,19 +269,19 @@
 
 .video-play {
     margin: 0 auto;
-    position: relative;
-    /*overflow: hidden;*/
+}
+
+.head {
+    height: 50px;
+    line-height: 50px;
 }
 
 #title {
     float: left;
-    font-size: 1.8em;
+    font-size: 2em;
 }
 
 .go-back {
     float: right;
-}
-
-#loading {
-    margin: 30px auto 0;
+    font-size: 1.8em
 }

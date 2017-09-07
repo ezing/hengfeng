@@ -47,6 +47,8 @@ function getWeikeList(param, cb) {
 function renderWeikeList(data) {
     if(!isJSON(data)) {
         data = JSON.parse($(data).text());
+    } else {
+        data = JSON.parse(data);
     }
     var list = data.listData || [],
         html = [];

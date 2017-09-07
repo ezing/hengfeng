@@ -15,6 +15,13 @@
         height: 50px;
         line-height: 50px;
     }
+    .video-play {
+        width: 800px;
+        overflow: hidden;
+    }
+    #loading {
+        width: 800px;
+    }
 }
 
 
@@ -45,6 +52,12 @@
         height: 70px;
         line-height: 70px;
         font-size: 18px;
+    }
+    .video-play {
+        width: 800px;
+    }
+    #loading {
+        width: 800px;
     }
 }
 
@@ -248,14 +261,14 @@
 
 .video-play-panel {
     width: 100%;
-    padding-top: 4%;
+    padding-top: 3%;
     display: none;
 }
 
 .video-play {
-    width: 800px;
     margin: 0 auto;
-    overflow: hidden;
+    position: relative;
+    /*overflow: hidden;*/
 }
 
 #title {
@@ -268,6 +281,5 @@
 }
 
 #loading {
-    width: 800px;
-    margin: 20px auto 0;
+    margin: 30px auto 0;
 }

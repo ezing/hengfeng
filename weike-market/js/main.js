@@ -2,7 +2,6 @@ var config = {
     weike_item: [
         '<div class="weike-item">',
         '    <div class="thumb-container">',
-        // '        <a href="./player.html?title=%(SPMC)&videoUrl=%(SPUrl_str)" class="video-href" data-url="%(SPUrl_str)" data-title="%(SPMC)"></a>',
         '        <a href="#" class="video-href" data-url="%(SPUrl_str)" data-title="%(SPMC)"></a>',
         '        <i class="bg"></i>',
         '        <img src="%(SLTUrl)" alt="">',
@@ -16,7 +15,7 @@ var config = {
 
 var defaultParam = {
     subjectID: '',
-    // gradeID: 1,
+    // gradeID: 3,
     pageIndex: 1,
     pageSize: 15,
     searchText: ''
@@ -30,23 +29,27 @@ function getWeikeList(param, cb) {
     paramCache = param;
     $.ajax({
         url: _url,
+        // url: config.url,
         data: paramCache,
         type: 'POST',
         success: function(data) {
-            renderWeikeList($(data).text());
+            renderWeikeList(data);
             if (typeof cb === 'function') {
                 cb();
             }
         },
         error: function(e) {
-            alert(JSON.stringify(e))
-            // alert('网络错误');
+            // alert(JSON.stringify(e))
         }
     });
 }
 
 function renderWeikeList(data) {
-    var data = JSON.parse(data);
+    if (!M.util.isJSON(data)) {
+        data = JSON.parse($(data).text());
+    } else {
+        data = JSON.parse(data);
+    }
     var list = data.listData || [],
         html = [];
     $(list).each(function(index, item) {
@@ -131,7 +134,8 @@ $(document.body).on('click', '.go-search', function() {
     getWeikeList(paramCache);
 })
 
-$(document.body).on('click', '.go-back', function(){
+$(document.body).on('click', '.go-back', function() {
+    pauseVideo();
     $('.video-play-panel').hide();
     getWeikeList(defaultParam);
 })
@@ -142,19 +146,18 @@ $(document.body).on('click', '.video-href', function(e) {
     $('#title').html($e.data('title'));
     jwplayer('loading').setup({
         autostart: true,
-        screencolor: '0x000000',
+        screencolor: '0xFFFFFF',
         flashplayer: './js/player.swf',
         file: $e.data('url'),
-        height: 800
+        height: 500,
+        width: 800,
+        stretching: "fill",
+        // skin: {
+        //     "url": "./css/jw-skin.css",
+        //     "name": "myskin"
+        // }
     });
     $('.video-play-panel').show();
-    // try {
-    //     window.location.href = './player.html?title='+ encodeURIComponent($e.data('title')) +'&videoUrl=' + $e.data('url');
-    // } catch (e) {
-    //     alert(JSON.stringify(e))
-    // } finally {
-    //
-    // }
     // var str = '<video class="video-js vjs-default-skin" controls data-setup="{ html5 : { nativeControlsForTouch : true }, controlBar: { volumePanel: {inline: false } } }" id="modal-video" autoplay src="' + $e.data('url') + '" poster=""></video>';
     // bootbox.dialog({
     //     title: $e.data('title'),
@@ -198,7 +201,7 @@ $(document.body).on('click', '.video-href', function(e) {
 function pauseVideo() {
     // var player = videojs('modal-video');
     // player.pause();
-    jwplayer('loading').pause(true)
+    jwplayer().pause(true)
 }
 
 // $('.modal').on('hidden.bs.modal', function(e) {

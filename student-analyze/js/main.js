@@ -1,5 +1,6 @@
 // var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/";
-var urlPre = decodeURI(getParam('urlName'));
+// var urlPre = "http://192.168.1.120/WEBservice/HuDongKeTang/studentInfo.asmx/";
+var urlPre = decodeURIComponent(getParam('urlName'));
 var list_item = [
     '<tr>',
     '    <td>%(rownum)</td>',
@@ -122,11 +123,15 @@ $.ajax({
     data: defaultParam,
     type: 'POST',
     success: function(data) {
-        var data = JSON.parse($(data).text());
-        tList = [data.RenZhenAvg, data.JiJiAvg, data.XiaoLvAvg].map(function(obj) {
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
+        var tList = [data.RenZhenAvg, data.JiJiAvg, data.XiaoLvAvg].map(function(obj) {
             return formateNum(obj);
         });
-        sList = [data.RenZhenStudent, data.JiJiStudent, data.XiaoLvStudent].map(function(obj) {
+        var sList = [data.RenZhenStudent, data.JiJiStudent, data.XiaoLvStudent].map(function(obj) {
             return formateNum(obj);
         });
         resChart.setOption({
@@ -138,7 +143,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 });
 
@@ -213,7 +218,11 @@ $.ajax({
     data: defaultParam,
     type: 'GET',
     success: function(data) {
-        var data = JSON.parse($(data).text());
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
         var list = [data.KeQianRightPercentStudent, data.KeZhongRightPercentStudent, data.KeHouRightPercentStudent, data.JiePingRightPercentStudent];
         var resList = list.map(function(obj) {
             return formateNum(obj);
@@ -227,7 +236,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 })
 
@@ -236,19 +245,23 @@ $.ajax({
     data: defaultParam,
     type: 'GET',
     success: function(data) {
-        var data = JSON.parse($(data).text());
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
         data.RenWuFinishPercent_str = formateNum(data.RenWuFinishPercent)
         $('.user_list').html(list_item.jstpl_format(data));
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 })
 
 $(document.body).on('click', '.class-detail', function() {
-    location.href = './class-detail.html?userID=' + userId;
+    location.href = './class-detail.html?userID=' + userId + '&urlPre=' + urlPre;
 })
 
 $(document.body).on('click', '.exam-detail', function() {
-    location.href = './exam-detail.html?userID=' + userId;
+    location.href = './exam-detail.html?userID=' + userId + '&urlPre=' + urlPre;
 })

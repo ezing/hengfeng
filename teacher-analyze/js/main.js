@@ -1,5 +1,5 @@
 // var urlPre = "http://w21.pdoca.com/WEBservice/HuDongKeTang/teacherinfo.asmx/";
-var urlPre = decodeURI(getParam('urlName'));
+var urlPre = decodeURIComponent(getParam('urlName'));
 var list_item = [
     '<tr>',
     '    <td>%(Sort_Id)</td>',
@@ -94,8 +94,12 @@ $.ajax({
     data: defaultParam,
     type: 'POST',
     success: function(data) {
-        var data = JSON.parse($(data).text()),
-            list = [data.RenZhenAvg, data.JiJiAvg, data.XiaoLvAvg];
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
+        var list = [data.RenZhenAvg, data.JiJiAvg, data.XiaoLvAvg];
         var resList = list.map(function(obj) {
             return formateNum(obj);
         });
@@ -106,7 +110,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 })
 
@@ -183,7 +187,11 @@ $.ajax({
     data: defaultParam,
     type: 'GET',
     success: function(data) {
-        var data = JSON.parse($(data).text());
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
         var list = [data.KeQianRightPercentAvg, data.KeZhongRightPercentAvg, data.KeHouRightPercentAvg, data.JiePingRightPercentAvg];
         var resList = list.map(function(obj) {
             return formateNum(obj);
@@ -197,7 +205,7 @@ $.ajax({
         })
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 })
 
@@ -206,7 +214,11 @@ $.ajax({
     data: defaultParam,
     type: 'GET',
     success: function(data) {
-        var data = JSON.parse($(data).text());
+        if (!isJSON(data)) {
+            data = JSON.parse($(data).text());
+        } else {
+            data = JSON.parse(data);
+        }
         var list = data.listData || [],
             html = [];
         $(list).each(function(index, item) {
@@ -216,14 +228,14 @@ $.ajax({
         $('.user_list').html(html.join(''));
     },
     error: function(e) {
-        alert('网络错误');
+        // alert('网络错误');
     }
 })
 
 $(document.body).on('click', '.class-detail', function() {
-    location.href = './class-detail.html?banJiID=' + classId;
+    location.href = './class-detail.html?banJiID=' + classId + '&urlPre=' + urlPre;
 })
 
 $(document.body).on('click', '.exam-detail', function() {
-    location.href = './exam-detail.html?banJiID=' + classId;
+    location.href = './exam-detail.html?banJiID=' + classId + '&urlPre=' + urlPre;
 })

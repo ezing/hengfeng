@@ -149,7 +149,8 @@
 
 
         var classId = getParam('banJiID');
-        var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/TeacherInfo.asmx/getBanJiAvgLearningAnalysis_CeYan_Detail';
+        // var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/TeacherInfo.asmx/getBanJiAvgLearningAnalysis_CeYan_Detail';
+        var url = getParam('urlPre') + 'getBanJiAvgLearningAnalysis_CeYan_Detail';
         var defaultParam = {
             banJiID: classId,
             subjectID: '',
@@ -161,7 +162,11 @@
             data: defaultParam,
             type: 'GET',
             success: function(data) {
-                var data = JSON.parse($(data).text());
+                if (!isJSON(data)) {
+                    data = JSON.parse($(data).text());
+                } else {
+                    data = JSON.parse(data);
+                }
                 var list = data.listData || [];
                 var before_arr = [],
                     exam_arr = [],
@@ -213,7 +218,7 @@
                 });
             },
             error: function(e) {
-                alert('网络错误');
+                // alert('网络错误');
             }
         });
 

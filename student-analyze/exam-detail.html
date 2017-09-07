@@ -148,7 +148,7 @@
         setChart(chart4, '#ffc600');
 
         var userId = getParam('userID');
-        var url = 'http://w21.pdoca.com/WEBservice/HuDongKeTang/studentInfo.asmx/getStudentLearningAnalysis_CeYan_Detail';
+        var url = getParam('urlPre') + 'getStudentLearningAnalysis_CeYan_Detail';
         var defaultParam = {
             userID: userId,
             subjectID: '',
@@ -160,7 +160,11 @@
             data: defaultParam,
             type: 'GET',
             success: function(data) {
-                var data = JSON.parse($(data).text());
+                if (!isJSON(data)) {
+                    data = JSON.parse($(data).text());
+                } else {
+                    data = JSON.parse(data);
+                }
                 var list = data.listData || [];
                 var before_arr = [],
                     exam_arr = [],
@@ -208,7 +212,7 @@
                 });
             },
             error: function(e) {
-                alert('网络错误');
+                // alert('网络错误');
             }
         });
 

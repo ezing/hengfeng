@@ -8,6 +8,16 @@
      return parseFloat(num).toFixed(2);
  }
 
+ function isJSON(str) {
+     if (typeof(str) == 'object' && Object.prototype.toString.call(str).toLowerCase() == "[object object]") {
+         return true;
+     } else if (typeof(str) == 'string') {
+         return true;
+     } else {
+         return false;
+     }
+ }
+
  function formateXAxis(params) {
      var newParamsName = ""; // 最终拼接成的字符串
      var paramsNameNumber = params.length; // 实际标签的个数

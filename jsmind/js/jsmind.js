@@ -258,22 +258,22 @@
             var nodeindex = idx || -1;
             var node = null;
             if (parent_node.isroot) {
-                var d = jm.direction.right;
-                if (isNaN(direction)) {
-                    var children = parent_node.children;
-                    var children_len = children.length;
-                    var r = 0;
-                    for (var i = 0; i < children_len; i++) {
-                        if (children[i].direction === jm.direction.left) {
-                            r--;
-                        } else {
-                            r++;
-                        }
-                    }
-                    d = (children_len > 1 && r > 0) ? jm.direction.left : jm.direction.right
-                } else {
-                    d = (direction != jm.direction.left) ? jm.direction.right : jm.direction.left;
-                }
+                var d = jm.direction.center;
+                // if (isNaN(direction)) {
+                //     var children = parent_node.children;
+                //     var children_len = children.length;
+                //     var r = 0;
+                //     for (var i = 0; i < children_len; i++) {
+                //         if (children[i].direction === jm.direction.left) {
+                //             r--;
+                //         } else {
+                //             r++;
+                //         }
+                //     }
+                //     d = (children_len > 1 && r > 0) ? jm.direction.left : jm.direction.right
+                // } else {
+                //     d = (direction != jm.direction.left) ? jm.direction.right : jm.direction.left;
+                // }
                 if (typeof(editable) === 'undefined') {
                     node = new jm.node(nodeid, nodeindex, topic, data, false, parent_node, d, expanded, true);
                 } else {
@@ -520,9 +520,6 @@
             }
         },
 
-        addNodeExtras: function(node, data) {
-
-        }
     };
 
     jm.format = {
@@ -2667,7 +2664,8 @@
 
         get_view_offset: function() {
             var bounds = this.layout.bounds;
-            var _x = (this.size.w - bounds.e - bounds.w) / 2;
+            // var _x = (this.size.w - bounds.e - bounds.w) / 2;
+            var _x = 250 ;
             var _y = this.size.h / 2;
             return {
                 x: _x,
@@ -2707,13 +2705,20 @@
         },
 
         setZoom: function(zoom) {
+            var _zoom = this.actualZoom;
             if ((zoom < this.minZoom) || (zoom > this.maxZoom)) {
                 return false;
             }
             this.actualZoom = zoom;
-            for (var i = 0; i < this.e_panel.children.length; i++) {
-                this.e_panel.children[i].style.transform = 'scale(' + zoom + ')';
-            };
+            // for (var i = 0; i < this.e_panel.children.length; i++) {
+            //     this.e_panel.children[i].style.transform = 'scale(' + zoom + ')';
+            // };
+            var _jm = this.jm;
+            $('.theme-primary').children().each(function(index, e) {
+                console.log(e);
+                _jm.set_node_font_style($(e).attr('nodeid'), zoom*25)
+                // $(e).css('transform', 'translate(' + zoom*100 + 'px)');
+            })
             this.show(true);
             return true;
 

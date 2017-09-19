@@ -9,7 +9,7 @@
         width: 330px;
     }
     .subjects ul {
-        top: -203px;
+        /*top: -203px;*/
     }
     .subjects ul li {
         height: 50px;
@@ -47,7 +47,7 @@
         width: 1500px;
     }
     .subjects ul {
-        top: -282px;
+        /*top: -282px;*/
     }
     .subjects ul li {
         height: 70px;

@@ -28,7 +28,7 @@ function getWeikeDetails(id, player) {
             renderWeikeDetail($(data).text(), player);
         },
         error: function(e) {
-            alert('出错啦');
+            alert('网络错误');
         }
     });
 }

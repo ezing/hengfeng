@@ -10,6 +10,9 @@ var config = {
         '    <h4 class="weike-title" style="margin-left:10px">%(SPMC)</h4>',
         '</div>'
     ].join(''),
+    subject_item: [
+        '<li data-type="%(ID)">%(Name)</li>'
+    ].join(''),
     // url: 'http://w21.pdoca.com/WEBservice/HuDongKeTang/Before_In_AfterClass.asmx/GetWeiKeList'
 };
 
@@ -22,8 +25,7 @@ var defaultParam = {
 }
 
 defaultParam.gradeID = window.external.getGradeID();
-var paramCache = null,
-    _url = decodeURIComponent(M.util.getParam('urlName'));
+var paramCache = null, _subjects = [], _url = decodeURIComponent(M.util.getParam('urlName'));
 
 function getWeikeList(param, cb) {
     paramCache = param;
@@ -97,10 +99,10 @@ $(document.body).on('click', '.subject-btn', function() {
 
 $(document.body).on('click', '.subjects ul > li', function(e) {
     var $e = $(e.target);
-    // $('.subject-slt').attr('data-sid', $e.data('type')).html($(e.target).text());
     $('.subject-slt').html($e.text());
     $('.subjects > ul').toggle();
     $('.search-input').val('');
+    $('.back_btn').css('background', 'url(./css/img/back.png) no-repeat center').attr('disabled', 'disabled');
     var subjectID = $e.data('type');
     paramCache.subjectID = subjectID;
     paramCache.pageIndex = 1;
@@ -137,12 +139,14 @@ $(document.body).on('click', '.go-search', function() {
 $(document.body).on('click', '.go-back', function() {
     pauseVideo();
     $('.video-play-panel').hide();
+    $('.search-bar').show();
     getWeikeList(defaultParam);
 })
 
 $(document.body).on('click', '.video-href', function(e) {
     var $e = $(e.target);
     $('.video-container').hide();
+    $('.search-bar').hide();
     $('#title').html($e.data('title'));
     jwplayer('loading').setup({
         autostart: true,
@@ -204,10 +208,32 @@ function pauseVideo() {
     jwplayer().pause(true)
 }
 
-// $('.modal').on('hidden.bs.modal', function(e) {
-//     pauseVideo();
-// })
-
 $(document).ready(function() {
+    _subjects = decodeURIComponent(M.util.getParam('subjects'));
+    var html = [],
+        list = [], $ul = $('.subjects ul');
+    if (_subjects.length) {
+        list = JSON.parse(_subjects);
+    } else {
+        list = [{
+            ID: '',
+            Name: "全部"
+        }, {
+            ID: 1,
+            Name: "语文"
+        },{
+            ID: 2,
+            Name: "数学"
+        }, {
+            ID: 3,
+            Name: "英语"
+        }]
+    }
+    $(list).each(function(index, item) {
+        html.push(config.subject_item.jstpl_format(item));
+    });
+    $ul.html(html.join(''));
+    var height = $('.subjects ul li').css('height');
+    $ul.css('top', '-' + parseInt(height)*list.length +'px');
     getWeikeList(defaultParam);
 });

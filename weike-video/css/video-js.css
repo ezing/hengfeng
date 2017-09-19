@@ -30,7 +30,7 @@
 
 .vjs-icon-play:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before, .video-js .vjs-play-control .vjs-icon-placeholder:before {
     content: "";
-    background: url(./img/play.png) no-repeat;
+    background: url(./img/s-play.png) no-repeat;
     /* background-size: 100% 100%; */
     background-position: center;
 }
@@ -111,8 +111,8 @@
 .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
     content: "\f108";
     color: #00bda5;
-    line-height: 1.9em;
-    font-size: 2.7em;
+    font-size: 20px;
+    line-height: 50px;
     /*line-height: 3em;*/
     font-weight: bold;
 
@@ -255,7 +255,7 @@
 }
 
 .vjs-icon-replay:before, .video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder:before {
-    content: "\f116";
+    /*content: "\f116";*/
 }
 
 .vjs-icon-facebook {

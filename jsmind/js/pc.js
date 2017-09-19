@@ -68,8 +68,10 @@ var mind = {
         },
     ]
 };
-var jm = jsMind.show(options, mind),
+var jm = jsMind.show(options),
     root = jm.get_root();
+var initialHeight = $('.theme-primary').height();
+// $('.root').css('left', '10px')
 // var list = [root];
 function allowDrop(e) {
     e.preventDefault();
@@ -122,6 +124,7 @@ function drop(e) {
             var offsetY2 = $e.offset().top + $e.outerHeight();
             if (offsetX1 < x && x < offsetX2 && offsetY1 < y && y < offsetY2) {
                 jm.add_node(val, name, name)
+                checkZoomout();
             }
         })
     }
@@ -158,6 +161,20 @@ function addNode(name) {
     jm.add_node(_node, name, name);
 }
 
+function checkZoomout() {
+    if ($('.theme-primary').height() > initialHeight) {
+        jm.view.zoomOut();
+        initialHeight = $('.theme-primary').height()
+    }
+}
+
+function checkZoomin() {
+    if ($('.theme-primary').height() < initialHeight) {
+        jm.view.zoomIn();
+        initialHeight = $('.theme-primary').height()
+    }
+}
+
 function createExtraHtml(el) {
     console.log(el);
     // return ''
@@ -179,6 +196,7 @@ $(document.body).on('click', '.del-node', function(e) {
         alert('不能删除根节点')
     } else {
         jm.remove_node(_node);
+        checkZoomin()
     }
 })
 
@@ -189,6 +207,14 @@ $(document.body).on('click', '.upload-btn', function(e) {
     } else {
         // jm.remove_node(_node);
     }
+})
+
+$(document.body).on('click', '.fa-search-plus', function(e) {
+    jm.view.zoomIn();
+})
+
+$(document.body).on('click', '.fa-search-minus', function(e) {
+    jm.view.zoomOut();
 })
 // $.contextMenu({
 //     selector: 'jmnode',
